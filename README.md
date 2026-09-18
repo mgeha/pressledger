@@ -7,6 +7,12 @@ from the printer's built-in accounting endpoint, stores it locally in SQLite, an
 presents it as a filterable, sortable web interface — with JSON API endpoints for
 external data consumers.
 
+## Screenshots
+
+| Job list | Job detail | Paper consumption |
+|---|---|---|
+| [<img src="docs/screenshots/jobs.webp" alt="Job list" width="260">](docs/screenshots/jobs.webp) | [<img src="docs/screenshots/job-106044.webp" alt="Job detail" width="260">](docs/screenshots/job-106044.webp) | [<img src="docs/screenshots/paper.webp" alt="Paper consumption" width="260">](docs/screenshots/paper.webp) |
+
 ## Features
 
 - Per-job click counts (A4/A3/XL, colour/mono) aggregated across print days

@@ -11,7 +11,7 @@ pressledger.toml
 CLAUDE.md
 pressledger/web/static/fonts/
 fonts/
-docs/
+docs-dev/
 dist/
 .ruff_cache/
 .pytest_cache/
