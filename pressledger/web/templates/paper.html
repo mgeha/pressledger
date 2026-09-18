@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Paper") }} — PressLedger{% endblock %}
+
+{% block content %}
+<div class="label">
+  <p class="label__rubric">{{ _("Reporting") }}</p>
+  <div class="label__body">
+    <h1>{{ _("Paper") }}</h1>
+    <form method="post" action="/sync">
+      <input type="hidden" name="redirect_to" value="/paper">
+      <button class="btn" type="submit">{{ _("Sync now") }}</button>
+    </form>
+  </div>
+</div>
+
+<form class="filters" id="filter"
+      hx-get="/paper/table"
+      hx-target="#paper"
+      hx-swap="outerHTML"
+      hx-trigger="input from:#q changed delay:250ms, change from:#filter"
+      hx-push-url="false">
+  <div class="field">
+    <label class="field__label" for="q">{{ _("Search") }}</label>
+    <input type="search" id="q" name="q" value="{{ q or '' }}"
+           placeholder="{{ _('Media name, format') }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_from">{{ _("From") }}</label>
+    <input type="date" id="date_from" name="date_from" value="{{ date_from or '' }}" min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_to">{{ _("To") }}</label>
+    <input type="date" id="date_to" name="date_to" value="{{ date_to or '' }}" min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="jobtype">{{ _("Job type") }}</label>
+    <select id="jobtype" name="jobtype">
+      <option value="" {% if not jobtype %}selected{% endif %}>{{ _("all") }}</option>
+      <option value="IP" {% if jobtype == 'IP' %}selected{% endif %}>IP — {{ _("Print jobs") }}</option>
+      <option value="SYSTEM" {% if jobtype == 'SYSTEM' %}selected{% endif %}>SYSTEM — {{ _("Calibration") }}</option>
+      <option value="AP" {% if jobtype == 'AP' %}selected{% endif %}>AP — {{ _("Direct print") }}</option>
+    </select>
+  </div>
+  {% include "_machine_filter.html" %}
+  <input type="hidden" name="sort" value="{{ sort }}">
+  <input type="hidden" name="desc" value="{{ 1 if desc else 0 }}">
+  <a class="btn btn--ghost" href="/paper">{{ _("Reset") }}</a>
+</form>
+
+{% include "_paper_table.html" %}
+
+<p class="hint">
+  {{ _("Sheets = simplex + rounded-up half of duplex pages; the machine counts duplex pages as pages, not sheets. A grade is the combination of media name, format, weight and paper colour — an empty media name means the tray is not in the machine's media catalogue.") }}
+</p>
+<p class="hint">
+  {{ _("All job types are selected by default: calibration sheets and direct prints consume stock like customer jobs. Clicks are absent here — they are the billing figure and cannot be derived from sheets.") }}
+</p>
+{% endblock %}

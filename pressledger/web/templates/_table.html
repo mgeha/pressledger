@@ -1,0 +1,83 @@
+<div class="table-wrap" id="table">
+{% if jobs %}
+<table>
+  <thead>
+    <tr>
+      <th><a href="{{ sort_url('job_key') }}" hx-get="{{ sort_url('job_key') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'job_key' else 0 }}">{{ _("Job") }}{% if sort == 'job_key' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th>{{ _("File name") }}</th>
+      {% if multi_machine %}<th>{{ _("Machine") }}</th>{% endif %}
+      <th class="r"><a href="{{ sort_url('clicks_bw') }}" hx-get="{{ sort_url('clicks_bw') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'clicks_bw' else 0 }}">{{ _("Clicks b/w") }}{% if sort == 'clicks_bw' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('clicks_colour') }}" hx-get="{{ sort_url('clicks_colour') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'clicks_colour' else 0 }}">{{ _("Clicks colour") }}{% if sort == 'clicks_colour' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('clicks') }}" hx-get="{{ sort_url('clicks') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'clicks' else 0 }}">{{ _("Clicks") }}{% if sort == 'clicks' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('sheets') }}" hx-get="{{ sort_url('sheets') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'sheets' else 0 }}">{{ _("Sheets") }}{% if sort == 'sheets' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('sets') }}" hx-get="{{ sort_url('sets') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'sets' else 0 }}">{{ _("Copies") }}{% if sort == 'sets' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('runtime_s') }}" hx-get="{{ sort_url('runtime_s') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'runtime_s' else 0 }}">{{ _("Runtime") }}{% if sort == 'runtime_s' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('proofs') }}" hx-get="{{ sort_url('proofs') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'proofs' else 0 }}">{{ _("Proofs") }}{% if sort == 'proofs' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th>{{ _("Finishing") }}</th>
+      <th><a href="{{ sort_url('last_day') }}" hx-get="{{ sort_url('last_day') }}" hx-target="#table" hx-swap="outerHTML" data-active="{{ 1 if sort == 'last_day' else 0 }}">{{ _("Period") }}{% if sort == 'last_day' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in jobs %}
+    <tr>
+      <td><a class="jobnum" href="/job/{{ r.job_key | path_segment }}">{{ r.job_label }}</a></td>
+      <td class="title" title="{{ r.jobnames | join(', ') }}">
+        {{ r.jobname }}
+        {% if r.jobnames | length > 1 %}<span class="muted">+{{ r.jobnames | length - 1 }}</span>{% endif %}
+      </td>
+      {% if multi_machine %}
+      {# Which presses ran this job; the per-press figures are on the detail page. #}
+      <td class="n">{% for m in r.machines %}<span class="span__row">{{ m }}</span>{% endfor %}</td>
+      {% endif %}
+      <td class="r n">{{ r.clicks_bw | number }}</td>
+      <td class="r n">{{ r.clicks_colour | number }}</td>
+      <td class="r n">
+        <span class="clicks">
+          {{ r.clicks | number }}
+          <span class="clicks__bar" style="width: {{ bar(r.clicks) }}px" aria-hidden="true"></span>
+        </span>
+      </td>
+      <td class="r n">{{ r.sheets | number }}</td>
+      <td class="r n">{{ r.sets | number }}</td>
+      <td class="r n">{{ r.runtime_s | duration }}</td>
+      <td class="r n">
+        {% if r.proofs %}{{ r.proofs }}<span class="muted"> · {{ r.proof_ratio }}%</span>{% else %}<span class="muted">—</span>{% endif %}
+      </td>
+      <td>
+        {% set items = r | finishing %}
+        {% if items %}
+        <span class="finishing">
+          {% for it in items %}
+          <span class="finishing__row">
+            <span class="finishing__n">{{ it.count | number }}</span>
+            <span class="finishing__label">{{ ngettext(it.one, it.many, it.count) }}</span>
+          </span>
+          {% endfor %}
+        </span>
+        {% else %}<span class="muted">—</span>{% endif %}
+      </td>
+      <td class="n">
+        <span class="span">
+          {%- if r.days > 1 %}
+          <span class="span__row">{{ r.first_day | date }} <span class="muted">{{ r.first_ts | clock }}</span></span>
+          <span class="span__row muted">… {{ r.last_day | date }} {{ r.last_ts | clock }}</span>
+          {%- else %}
+          <span class="span__row">{{ r.first_day | date }}</span>
+          <span class="span__row muted">
+            {{- r.first_ts | clock }}{% if (r.last_ts | clock) != (r.first_ts | clock) %} – {{ r.last_ts | clock }}{% endif -%}
+          </span>
+          {%- endif %}
+          {% if r.unfinished %}<span class="span__row"><span class="tag tag--plain" title="{{ ngettext('%(n)s line not finished', '%(n)s lines not finished', r.not_done, n=r.not_done) }}">{{ _(r.result_label) }}</span></span>{% endif %}
+        </span>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty">
+  <p>{{ _("No jobs in the selected period.") }}</p>
+  <p class="muted">{{ _("Reset the filter or choose a different job type.") }}</p>
+</div>
+{% endif %}
+</div>

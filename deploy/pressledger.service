@@ -1,0 +1,27 @@
+[Unit]
+Description=PressLedger - Canon print accounting
+Documentation=file:///opt/pressledger/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pressledger
+Group=pressledger
+WorkingDirectory=/opt/pressledger
+ExecStart=/usr/local/bin/uv run --frozen pressledger serve
+
+Restart=always
+RestartSec=10
+
+ReadWritePaths=/opt/pressledger/data
+ProtectSystem=full
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=pressledger
+
+[Install]
+WantedBy=multi-user.target

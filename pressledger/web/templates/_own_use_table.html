@@ -1,0 +1,90 @@
+<div id="own-use">
+<div class="figures">
+  <div class="figure">
+    <span class="figure__value">{{ totals.runs | number }}</span>
+    <span class="figure__label">{{ _("Runs") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.clicks | number }}</span>
+    <span class="figure__label">{{ _("Clicks") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.sheets | number }}</span>
+    <span class="figure__label">{{ _("Sheets") }}</span>
+  </div>
+</div>
+
+{% if rows %}
+<section class="section">
+  <div class="section__head">
+    <h2>{{ _("By kind") }}</h2>
+    <p class="section__note">{{ _("The machine writes a fixed handful of names; each one is a kind of run.") }}</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ _("File name") }}</th>
+          {% if multi_machine %}<th>{{ _("Machine") }}</th>{% endif %}
+          <th class="r">{{ _("Runs") }}</th>
+          <th class="r">{{ _("Clicks") }}</th>
+          <th class="r">{{ _("Sheets") }}</th>
+          <th class="r">{{ _("Days") }}</th>
+          <th>{{ _("Period") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td class="title">{{ r.jobname or '—' }}</td>
+          {% if multi_machine %}<td class="n">{{ r.machine_id }}</td>{% endif %}
+          <td class="r n">{{ r.runs | number }}</td>
+          <td class="r n">{{ r.clicks | number }}</td>
+          <td class="r n">{{ r.sheets | number }}</td>
+          <td class="r n">{{ r.days | number }}</td>
+          <td class="n">
+            {{ r.first_day | date }}{% if r.last_day != r.first_day %}<span class="muted"> … {{ r.last_day | date }}</span>{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head">
+    <h2>{{ _("By month") }}</h2>
+    <p class="section__note">{{ _("How often the machine attends to itself only becomes readable over a longer span.") }}</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ _("Month") }}</th>
+          <th class="r">{{ _("Runs") }}</th>
+          <th class="r">{{ _("Clicks") }}</th>
+          <th class="r">{{ _("Sheets") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in months %}
+        <tr>
+          <td class="n">{{ m.month }}</td>
+          <td class="r n">{{ m.runs | number }}</td>
+          <td class="r n">{{ m.clicks | number }}</td>
+          <td class="r n">{{ m.sheets | number }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% else %}
+<div class="table-wrap">
+  <div class="empty">
+    <p>{{ _("No runs of the machine's own in the selected period.") }}</p>
+  </div>
+</div>
+{% endif %}
+</div>

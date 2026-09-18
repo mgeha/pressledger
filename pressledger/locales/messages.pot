@@ -1,0 +1,714 @@
+# Translations template for PressLedger.
+# Copyright (C) 2026 Michael Hampicke
+# This file is distributed under the same license as the PressLedger
+# project.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PressLedger 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/mgeha/pressledger/issues\n"
+"POT-Creation-Date: 2026-09-18 09:41+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: pressledger/reports.py:44 pressledger/web/templates/job_detail.html:117
+msgid "Production"
+msgstr ""
+
+#: pressledger/reports.py:44 pressledger/web/templates/job_detail.html:116
+msgid "Proof"
+msgstr ""
+
+#: pressledger/reports.py:44
+msgid "Single"
+msgstr ""
+
+#: pressledger/reports.py:57
+msgid "Done"
+msgstr ""
+
+#: pressledger/reports.py:58
+msgid "Aborted"
+msgstr ""
+
+#: pressledger/reports.py:59
+msgid "Stopped"
+msgstr ""
+
+#: pressledger/reports.py:90 pressledger/web/templates/jobs.html:43
+msgid "Fold"
+msgid_plural "Folds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/reports.py:91 pressledger/web/templates/jobs.html:49
+msgid "Booklet"
+msgid_plural "Booklets"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/reports.py:92
+msgid "Saddle stitch"
+msgid_plural "Saddle stitches"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/reports.py:93
+msgid "Staple"
+msgid_plural "Staples"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/reports.py:94
+msgid "Punch"
+msgid_plural "Punches"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/reports.py:95
+msgid "Crease"
+msgid_plural "Creases"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/web/templates/_machine_filter.html:5
+#: pressledger/web/templates/_own_use_table.html:28
+#: pressledger/web/templates/_table.html:8
+#: pressledger/web/templates/_unassigned_table.html:23
+#: pressledger/web/templates/base.html:20
+#: pressledger/web/templates/job_detail.html:74
+#: pressledger/web/templates/own_use.html:6
+#: pressledger/web/templates/status.html:2
+#: pressledger/web/templates/status.html:8
+msgid "Machine"
+msgstr ""
+
+#: pressledger/web/templates/_machine_filter.html:7
+#: pressledger/web/templates/jobs.html:78
+#: pressledger/web/templates/paper.html:38
+#: pressledger/web/templates/unassigned.html:39
+msgid "all"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:5
+#: pressledger/web/templates/_own_use_table.html:29
+#: pressledger/web/templates/_own_use_table.html:65
+#: pressledger/web/templates/_unassigned_table.html:26
+#: pressledger/web/templates/job_detail.html:74
+msgid "Runs"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:9
+#: pressledger/web/templates/_own_use_table.html:30
+#: pressledger/web/templates/_own_use_table.html:66
+#: pressledger/web/templates/_table.html:11
+#: pressledger/web/templates/_unassigned_table.html:9
+#: pressledger/web/templates/_unassigned_table.html:28
+#: pressledger/web/templates/job_detail.html:21
+#: pressledger/web/templates/job_detail.html:74
+#: pressledger/web/templates/job_detail.html:105
+#: pressledger/web/templates/job_detail.html:108
+#: pressledger/web/templates/job_detail.html:138
+#: pressledger/web/templates/jobs.html:22
+msgid "Clicks"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:13
+#: pressledger/web/templates/_own_use_table.html:31
+#: pressledger/web/templates/_own_use_table.html:67
+#: pressledger/web/templates/_paper_table.html:9
+#: pressledger/web/templates/_paper_table.html:34
+#: pressledger/web/templates/_table.html:12
+#: pressledger/web/templates/_unassigned_table.html:13
+#: pressledger/web/templates/_unassigned_table.html:29
+#: pressledger/web/templates/job_detail.html:42
+#: pressledger/web/templates/job_detail.html:74
+#: pressledger/web/templates/job_detail.html:139
+#: pressledger/web/templates/jobs.html:30
+msgid "Sheets"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:20
+msgid "By kind"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:21
+msgid "The machine writes a fixed handful of names; each one is a kind of run."
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:27
+#: pressledger/web/templates/_table.html:7
+#: pressledger/web/templates/_unassigned_table.html:22
+#: pressledger/web/templates/own_use.html:24
+#: pressledger/web/templates/unassigned.html:24
+msgid "File name"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:32
+msgid "Days"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:33
+#: pressledger/web/templates/_paper_table.html:38
+#: pressledger/web/templates/_table.html:17
+#: pressledger/web/templates/_unassigned_table.html:33
+msgid "Period"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:57
+msgid "By month"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:58
+msgid ""
+"How often the machine attends to itself only becomes readable over a "
+"longer span."
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:64
+msgid "Month"
+msgstr ""
+
+#: pressledger/web/templates/_own_use_table.html:86
+msgid "No runs of the machine's own in the selected period."
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:5
+msgid "Grades"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:13
+#: pressledger/web/templates/_paper_table.html:35
+msgid "Simplex"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:17
+#: pressledger/web/templates/_paper_table.html:36
+msgid "Duplex pages"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:21
+msgid "Tray pulls"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:30
+#: pressledger/web/templates/base.html:18
+#: pressledger/web/templates/job_detail.html:140
+#: pressledger/web/templates/paper.html:2
+#: pressledger/web/templates/paper.html:8
+msgid "Paper"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:31
+msgid "Format"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:33
+#: pressledger/web/templates/job_detail.html:195
+#: pressledger/web/templates/job_detail.html:197
+#: pressledger/web/templates/job_detail.html:199
+msgid "Color"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:37
+#: pressledger/web/templates/base.html:16
+#: pressledger/web/templates/job_detail.html:5
+#: pressledger/web/templates/jobs.html:2 pressledger/web/templates/jobs.html:8
+#: pressledger/web/templates/jobs.html:18
+msgid "Jobs"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:45
+msgid "The tray is not in the machine's media catalogue"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:45
+msgid "— no media name —"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:67
+#: pressledger/web/templates/job_detail.html:200
+msgid "Total"
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:77
+msgid "No paper usage in the selected period."
+msgstr ""
+
+#: pressledger/web/templates/_paper_table.html:78
+#: pressledger/web/templates/_table.html:80
+msgid "Reset the filter or choose a different job type."
+msgstr ""
+
+#: pressledger/web/templates/_table.html:6
+#: pressledger/web/templates/job_detail.html:8
+msgid "Job"
+msgstr ""
+
+#: pressledger/web/templates/_table.html:9
+msgid "Clicks b/w"
+msgstr ""
+
+#: pressledger/web/templates/_table.html:10
+msgid "Clicks colour"
+msgstr ""
+
+#: pressledger/web/templates/_table.html:13
+#: pressledger/web/templates/_unassigned_table.html:27
+#: pressledger/web/templates/job_detail.html:38
+#: pressledger/web/templates/job_detail.html:74
+#: pressledger/web/templates/job_detail.html:108
+#: pressledger/web/templates/job_detail.html:137
+#: pressledger/web/templates/jobs.html:26
+msgid "Copies"
+msgstr ""
+
+#: pressledger/web/templates/_table.html:14
+#: pressledger/web/templates/_unassigned_table.html:30
+#: pressledger/web/templates/job_detail.html:74
+#: pressledger/web/templates/job_detail.html:109
+#: pressledger/web/templates/job_detail.html:142
+#: pressledger/web/templates/jobs.html:34
+msgid "Runtime"
+msgstr ""
+
+#: pressledger/web/templates/_table.html:15
+#: pressledger/web/templates/_unassigned_table.html:31
+#: pressledger/web/templates/job_detail.html:46
+#: pressledger/web/templates/jobs.html:38
+msgid "Proofs"
+msgstr ""
+
+#: pressledger/web/templates/_table.html:16
+#: pressledger/web/templates/_unassigned_table.html:32
+#: pressledger/web/templates/job_detail.html:141
+msgid "Finishing"
+msgstr ""
+
+#: pressledger/web/templates/_table.html:70
+#, python-format
+msgid "%(n)s line not finished"
+msgid_plural "%(n)s lines not finished"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/web/templates/_table.html:79
+msgid "No jobs in the selected period."
+msgstr ""
+
+#: pressledger/web/templates/_unassigned_table.html:5
+#: pressledger/web/templates/status.html:86
+msgid "Files"
+msgstr ""
+
+#: pressledger/web/templates/_unassigned_table.html:24
+#: pressledger/web/templates/job_detail.html:136
+msgid "Type"
+msgstr ""
+
+#: pressledger/web/templates/_unassigned_table.html:25
+msgid "User"
+msgstr ""
+
+#: pressledger/web/templates/_unassigned_table.html:71
+msgid "Every run in this selection is assigned to a job."
+msgstr ""
+
+#: pressledger/web/templates/base.html:17
+#: pressledger/web/templates/unassigned.html:2
+msgid "Unassigned"
+msgstr ""
+
+#: pressledger/web/templates/base.html:19
+#: pressledger/web/templates/own_use.html:2
+#: pressledger/web/templates/own_use.html:8
+msgid "Own use"
+msgstr ""
+
+#: pressledger/web/templates/base.html:29
+msgid "Printer reachable"
+msgstr ""
+
+#: pressledger/web/templates/base.html:29
+msgid "Sync"
+msgstr ""
+
+#: pressledger/web/templates/base.html:34
+msgid "Machine offline"
+msgstr ""
+
+#: pressledger/web/templates/base.html:34
+msgid "last sync"
+msgstr ""
+
+#: pressledger/web/templates/base.html:39
+msgid "Machine not yet reached"
+msgstr ""
+
+#: pressledger/web/templates/base.html:39
+msgid "attempt"
+msgstr ""
+
+#: pressledger/web/templates/base.html:44
+msgid "No sync yet"
+msgstr ""
+
+#: pressledger/web/templates/base.html:51
+msgid "Switch to English"
+msgstr ""
+
+#: pressledger/web/templates/base.html:53
+msgid "Switch to German"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:20
+msgid "Total clicks"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:27
+msgid "print day"
+msgid_plural "print days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/web/templates/job_detail.html:28
+msgid "machine run"
+msgid_plural "machine runs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pressledger/web/templates/job_detail.html:31
+#, python-format
+msgid ""
+"Printed pages over %(n_days)s %(day_word)s (%(date_range)s) in %(n_runs)s"
+" %(run_word)s."
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:50
+msgid "Proof share"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:54
+msgid "Runtime net"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:68
+msgid "By machine"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:69
+msgid ""
+"This job ran on more than one press — or on one of several. Clicks, "
+"sheets and run time per machine."
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:95
+msgid "Timeline"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:97
+msgid ""
+"One marker per machine run in chronological order, height proportional to"
+" clicks. Proof means: one copy followed later by a production run — a "
+"heuristic from the data, not reported by the machine."
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:118
+msgid "Single copy"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:124
+msgid "Machine runs"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:126
+msgid "Pause is the time since the end of the previous run of this job."
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:127
+msgid ""
+"Folds count folded sheets, not folded products: a booklet made of seven "
+"sheets reports seven folds."
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:134
+#: pressledger/web/templates/status.html:60
+msgid "Day"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:135
+#: pressledger/web/templates/status.html:86
+msgid "Start"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:143
+msgid "Pause"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:144
+#: pressledger/web/templates/status.html:86
+msgid "Result"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:192
+msgid "Clicks by format"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:194
+#: pressledger/web/templates/job_detail.html:196
+#: pressledger/web/templates/job_detail.html:198
+msgid "Black/White"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:203
+msgid ""
+"The click class follows the printer's billing logic, not the paper "
+"format: business cards on 220×315 count as A4."
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:208
+msgid "Material"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:217
+msgid "sheets"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:220
+msgid "No media information"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:223
+msgid ""
+"Sheets = simplex + rounded-up half of duplex pages. Also captures covers "
+"from a second tray."
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:229
+msgid "Raw data"
+msgstr ""
+
+#: pressledger/web/templates/job_detail.html:232
+msgid "Line"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:6 pressledger/web/templates/paper.html:6
+msgid "Reporting"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:10
+#: pressledger/web/templates/paper.html:11
+#: pressledger/web/templates/status.html:11
+msgid "Sync now"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:61
+#: pressledger/web/templates/own_use.html:23
+#: pressledger/web/templates/paper.html:23
+#: pressledger/web/templates/unassigned.html:23
+msgid "Search"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:63
+msgid "Job or file name"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:66
+#: pressledger/web/templates/own_use.html:27
+#: pressledger/web/templates/paper.html:28
+#: pressledger/web/templates/unassigned.html:27
+msgid "From"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:70
+#: pressledger/web/templates/own_use.html:32
+#: pressledger/web/templates/paper.html:32
+#: pressledger/web/templates/unassigned.html:32
+msgid "To"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:74
+#: pressledger/web/templates/paper.html:36
+msgid "Job type"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:76
+#: pressledger/web/templates/paper.html:39
+msgid "Print jobs"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:77
+#: pressledger/web/templates/paper.html:41
+msgid "Direct print"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:84
+#: pressledger/web/templates/own_use.html:37
+#: pressledger/web/templates/paper.html:47
+#: pressledger/web/templates/unassigned.html:45
+msgid "Reset"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:90
+msgid ""
+"A job is summed across all print days — follow-up deliveries do not "
+"appear as a separate job. Clicks are printed pages and the billing "
+"figure; sheets are the paper consumption."
+msgstr ""
+
+#: pressledger/web/templates/own_use.html:13
+msgid ""
+"What the press printed for itself: calibration, service runs and meter "
+"reports. None of it is billable, but it consumes clicks and stock like "
+"any other job. Selected by job type, so this page is unaffected by how "
+"runs are grouped elsewhere."
+msgstr ""
+
+#: pressledger/web/templates/paper.html:25
+msgid "Media name, format"
+msgstr ""
+
+#: pressledger/web/templates/paper.html:40
+msgid "Calibration"
+msgstr ""
+
+#: pressledger/web/templates/paper.html:53
+msgid ""
+"Sheets = simplex + rounded-up half of duplex pages; the machine counts "
+"duplex pages as pages, not sheets. A grade is the combination of media "
+"name, format, weight and paper colour — an empty media name means the "
+"tray is not in the machine's media catalogue."
+msgstr ""
+
+#: pressledger/web/templates/paper.html:56
+msgid ""
+"All job types are selected by default: calibration sheets and direct "
+"prints consume stock like customer jobs. Clicks are absent here — they "
+"are the billing figure and cannot be derived from sheets."
+msgstr ""
+
+#: pressledger/web/templates/status.html:6
+msgid "Data collection"
+msgstr ""
+
+#: pressledger/web/templates/status.html:17
+#, python-format
+msgid ""
+"PressLedger fetches accounting files from every configured machine every "
+"%(interval)s minutes, one after the other. A press does not run around "
+"the clock — a missed connection is normal, not an error. The machine "
+"holds only 99 files and then deletes the oldest; the local archive at "
+"%(raw_dir)s is the actual long-term storage."
+msgstr ""
+
+#: pressledger/web/templates/status.html:23
+msgid "Machines"
+msgstr ""
+
+#: pressledger/web/templates/status.html:27
+msgid "Rows in DB"
+msgstr ""
+
+#: pressledger/web/templates/status.html:37
+#: pressledger/web/templates/status.html:93
+msgid "reachable"
+msgstr ""
+
+#: pressledger/web/templates/status.html:38
+#: pressledger/web/templates/status.html:94
+msgid "offline"
+msgstr ""
+
+#: pressledger/web/templates/status.html:45
+msgid "Last contact"
+msgstr ""
+
+#: pressledger/web/templates/status.html:49
+msgid "Days imported"
+msgstr ""
+
+#: pressledger/web/templates/status.html:54
+msgid "Imported days"
+msgstr ""
+
+#: pressledger/web/templates/status.html:55
+msgid ""
+"CSV is a completed day, ACL the current one. The ACL day is re-imported "
+"on every sync run."
+msgstr ""
+
+#: pressledger/web/templates/status.html:60
+msgid "Source"
+msgstr ""
+
+#: pressledger/web/templates/status.html:60
+msgid "File"
+msgstr ""
+
+#: pressledger/web/templates/status.html:60
+#: pressledger/web/templates/status.html:86
+msgid "Rows"
+msgstr ""
+
+#: pressledger/web/templates/status.html:60
+msgid "Last read"
+msgstr ""
+
+#: pressledger/web/templates/status.html:73
+msgid "No data imported yet."
+msgstr ""
+
+#: pressledger/web/templates/status.html:80
+msgid "Last runs"
+msgstr ""
+
+#: pressledger/web/templates/status.html:81
+msgid "Without a connection nothing is changed — existing data is preserved."
+msgstr ""
+
+#: pressledger/web/templates/status.html:86
+msgid "Imported"
+msgstr ""
+
+#: pressledger/web/templates/status.html:86
+msgid "Note"
+msgstr ""
+
+#: pressledger/web/templates/status.html:103
+msgid "No run recorded yet."
+msgstr ""
+
+#: pressledger/web/templates/unassigned.html:6
+msgid "Data quality"
+msgstr ""
+
+#: pressledger/web/templates/unassigned.html:8
+msgid "Runs without a job"
+msgstr ""
+
+#: pressledger/web/templates/unassigned.html:13
+msgid ""
+"These print runs could not be assigned to a job: the file naming rule of "
+"this installation finds no key in their file name. For a workflow job "
+"that usually means the file was not named according to convention. "
+"Calibration and service runs of the machine are left out — they "
+"legitimately have no job and are reported under Own use."
+msgstr ""
+
+#: pressledger/web/templates/unassigned.html:37
+msgid "Selection"
+msgstr ""
+
+#: pressledger/web/templates/unassigned.html:40
+msgid "Direct print from workstation"
+msgstr ""
+
+#: pressledger/web/templates/unassigned.html:41
+msgid "Workflow, not assigned"
+msgstr ""
+

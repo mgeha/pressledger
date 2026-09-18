@@ -1,0 +1,75 @@
+<div id="unassigned">
+<div class="figures">
+  <div class="figure">
+    <span class="figure__value">{{ rows | length | number }}</span>
+    <span class="figure__label">{{ _("Files") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.clicks | number }}</span>
+    <span class="figure__label">{{ _("Clicks") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.sheets | number }}</span>
+    <span class="figure__label">{{ _("Sheets") }}</span>
+  </div>
+</div>
+
+<div class="table-wrap">
+{% if rows %}
+<table>
+  <thead>
+    <tr>
+      <th>{{ _("File name") }}</th>
+      {% if multi_machine %}<th>{{ _("Machine") }}</th>{% endif %}
+      <th>{{ _("Type") }}</th>
+      <th>{{ _("User") }}</th>
+      <th class="r">{{ _("Runs") }}</th>
+      <th class="r">{{ _("Copies") }}</th>
+      <th class="r">{{ _("Clicks") }}</th>
+      <th class="r">{{ _("Sheets") }}</th>
+      <th class="r">{{ _("Runtime") }}</th>
+      <th class="r">{{ _("Proofs") }}</th>
+      <th>{{ _("Finishing") }}</th>
+      <th>{{ _("Period") }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.jobname or '—' }}</td>
+      {% if multi_machine %}<td class="n">{{ r.machine_id }}</td>{% endif %}
+      <td><span class="tag tag--plain">{{ r.jobtype }}</span></td>
+      <td>{{ r.username or '—' }}</td>
+      <td class="r n">{{ r.rows }}</td>
+      <td class="r n">{{ r.sets | number }}</td>
+      <td class="r n">{{ r.clicks | number }}</td>
+      <td class="r n">{{ r.sheets | number }}</td>
+      <td class="r n">{{ r.runtime_s | duration }}</td>
+      <td class="r n">{% if r.proofs %}<span class="muted">{{ r.proofs }}</span>{% else %}<span class="muted">—</span>{% endif %}</td>
+      <td>
+        {% set items = r | finishing %}
+        {% if items %}
+        <span class="finishing">
+          {% for it in items %}
+          <span class="finishing__row">
+            <span class="finishing__n">{{ it.count | number }}</span>
+            <span class="finishing__label">{{ ngettext(it.one, it.many, it.count) }}</span>
+          </span>
+          {% endfor %}
+        </span>
+        {% else %}<span class="muted">—</span>{% endif %}
+      </td>
+      <td class="n">
+        {{ r.first_day | date }}{% if r.last_day != r.first_day %}<span class="muted"> … {{ r.last_day | date }}</span>{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty">
+  <p>{{ _("Every run in this selection is assigned to a job.") }}</p>
+</div>
+{% endif %}
+</div>
+</div>

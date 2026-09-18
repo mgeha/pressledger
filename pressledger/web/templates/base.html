@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}PressLedger{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='pressledger.css') }}">
+  {% if custom_css %}<link rel="stylesheet" href="/custom.css">{% endif %}
+  <script src="{{ url_for('static', path='htmx.min.js') }}" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="wordmark" href="/jobs">PressLedger{% if site_name %}<span class="wordmark__org">{{ site_name }}</span>{% endif %}</a>
+      <nav class="topnav">
+        <a href="/jobs" {% if nav == 'jobs' %}aria-current="page"{% endif %}>{{ _("Jobs") }}</a>
+        {% if grouping %}<a href="/unassigned" {% if nav == 'unassigned' %}aria-current="page"{% endif %}>{{ _("Unassigned") }}</a>{% endif %}
+        <a href="/paper" {% if nav == 'paper' %}aria-current="page"{% endif %}>{{ _("Paper") }}</a>
+        <a href="/own-use" {% if nav == 'own-use' %}aria-current="page"{% endif %}>{{ _("Own use") }}</a>
+        <a href="/status" {% if nav == 'status' %}aria-current="page"{% endif %}>{{ _("Machine") }}</a>
+      </nav>
+      {# One badge per press. With several, the id leads and the timestamp moves
+         to /status. #}
+      {% for st in status %}
+        {% set label = st.machine_id ~ ' · ' if multi_machine else '' %}
+        {% if st.online %}
+          <span class="state state--on">
+            <span class="state__dot" aria-hidden="true"></span>
+            {{ label }}{{ _("Printer reachable") }}{% if not multi_machine %} · {{ _("Sync") }} {{ st.last_success.finished_at | timestamp }}{% endif %}
+          </span>
+        {% elif st.last_success %}
+          <span class="state state--off">
+            <span class="state__dot" aria-hidden="true"></span>
+            {{ label }}{{ _("Machine offline") }}{% if not multi_machine %} · {{ _("last sync") }} {{ st.last_success.finished_at | timestamp }}{% endif %}
+          </span>
+        {% elif st.last_attempt %}
+          <span class="state state--off">
+            <span class="state__dot" aria-hidden="true"></span>
+            {{ label }}{{ _("Machine not yet reached") }}{% if not multi_machine %} · {{ _("attempt") }} {{ st.last_attempt.started_at | timestamp }}{% endif %}
+          </span>
+        {% else %}
+          <span class="state state--off">
+            <span class="state__dot" aria-hidden="true"></span>
+            {{ label }}{{ _("No sync yet") }}
+          </span>
+        {% endif %}
+      {% endfor %}
+      <form class="lang-switch" method="post" action="/set-lang">
+        <input type="hidden" name="redirect_to" value="{{ request.url.path }}">
+        {% if lang == 'de' %}
+          <button type="submit" name="lang" value="en" class="lang-switch__btn" title="{{ _('Switch to English') }}">EN</button>
+        {% else %}
+          <button type="submit" name="lang" value="de" class="lang-switch__btn" title="{{ _('Switch to German') }}">DE</button>
+        {% endif %}
+      </form>
+    </div>
+  </header>
+
+  <main class="shell">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

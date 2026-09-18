@@ -1,0 +1,82 @@
+<div id="paper">
+<div class="figures">
+  <div class="figure">
+    <span class="figure__value">{{ grades | length | number }}</span>
+    <span class="figure__label">{{ _("Grades") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.sheets | number }}</span>
+    <span class="figure__label">{{ _("Sheets") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.simplex | number }}</span>
+    <span class="figure__label">{{ _("Simplex") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.duplex | number }}</span>
+    <span class="figure__label">{{ _("Duplex pages") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.rows | number }}</span>
+    <span class="figure__label">{{ _("Tray pulls") }}</span>
+  </div>
+</div>
+
+<div class="table-wrap">
+{% if grades %}
+<table>
+  <thead>
+    <tr>
+      <th><a href="{{ sort_url('medianame') }}" hx-get="{{ sort_url('medianame') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'medianame' else 0 }}">{{ _("Paper") }}{% if sort == 'medianame' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th><a href="{{ sort_url('mediaformat') }}" hx-get="{{ sort_url('mediaformat') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'mediaformat' else 0 }}">{{ _("Format") }}{% if sort == 'mediaformat' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('mediaweight') }}" hx-get="{{ sort_url('mediaweight') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'mediaweight' else 0 }}">g/m²{% if sort == 'mediaweight' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th><a href="{{ sort_url('mediacolor') }}" hx-get="{{ sort_url('mediacolor') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'mediacolor' else 0 }}">{{ _("Color") }}{% if sort == 'mediacolor' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('sheets') }}" hx-get="{{ sort_url('sheets') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'sheets' else 0 }}">{{ _("Sheets") }}{% if sort == 'sheets' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('simplex') }}" hx-get="{{ sort_url('simplex') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'simplex' else 0 }}">{{ _("Simplex") }}{% if sort == 'simplex' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('duplex') }}" hx-get="{{ sort_url('duplex') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'duplex' else 0 }}">{{ _("Duplex pages") }}{% if sort == 'duplex' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th class="r"><a href="{{ sort_url('job_count') }}" hx-get="{{ sort_url('job_count') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'job_count' else 0 }}">{{ _("Jobs") }}{% if sort == 'job_count' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+      <th><a href="{{ sort_url('last_day') }}" hx-get="{{ sort_url('last_day') }}" hx-target="#paper" hx-swap="outerHTML" data-active="{{ 1 if sort == 'last_day' else 0 }}">{{ _("Period") }}{% if sort == 'last_day' %} {{ '↓' if desc else '↑' }}{% endif %}</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in grades %}
+    <tr>
+      <td>
+        {% if s.medianame %}{{ s.medianame }}{% else %}<span class="muted" title="{{ _('The tray is not in the machine\'s media catalogue') }}">{{ _("— no media name —") }}</span>{% endif %}
+      </td>
+      <td class="n">{{ s.mediaformat or '—' }}</td>
+      <td class="r n">{{ s.mediaweight | number }}</td>
+      <td>{% if s.mediacolor and s.mediacolor != 'White' %}{{ s.mediacolor }}{% else %}<span class="muted">—</span>{% endif %}</td>
+      <td class="r n">
+        <span class="clicks">
+          {{ s.sheets | number }}
+          <span class="clicks__bar" style="width: {{ bar(s.sheets) }}px" aria-hidden="true"></span>
+        </span>
+      </td>
+      <td class="r n">{{ s.simplex | number }}</td>
+      <td class="r n">{{ s.duplex | number }}</td>
+      <td class="r n">{% if s.job_count %}{{ s.job_count | number }}{% else %}<span class="muted">—</span>{% endif %}</td>
+      <td class="n">
+        {{ s.first_day | date }}{% if s.last_day != s.first_day %}<span class="muted"> … {{ s.last_day | date }}</span>{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4"><strong>{{ _("Total") }}</strong></td>
+      <td class="r n"><strong>{{ totals.sheets | number }}</strong></td>
+      <td class="r n">{{ totals.simplex | number }}</td>
+      <td class="r n">{{ totals.duplex | number }}</td>
+      <td colspan="2"></td>
+    </tr>
+  </tfoot>
+</table>
+{% else %}
+<div class="empty">
+  <p>{{ _("No paper usage in the selected period.") }}</p>
+  <p class="muted">{{ _("Reset the filter or choose a different job type.") }}</p>
+</div>
+{% endif %}
+</div>
+</div>

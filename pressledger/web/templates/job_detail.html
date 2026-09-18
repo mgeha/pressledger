@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% block title %}{{ job.job_label }} — PressLedger{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ back_url }}">← {{ _("Jobs") }}</a>
+
+<div class="label detail-head">
+  <p class="label__rubric">{{ _("Job") }}</p>
+  <div class="label__body">
+    <div>
+      <h1>{{ job.job_label }}</h1>
+      <p class="label__sub">
+        {{ job.jobname }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="counter">
+  <p class="eyebrow">{{ _("Total clicks") }}</p>
+  <div class="counter__register" role="img" aria-label="{{ job.clicks }} {{ _('Clicks') }}">
+    {% for d in job.clicks | string %}<span class="counter__digit">{{ d }}</span>{% endfor %}
+  </div>
+  <p class="counter__caption">
+    {%- set _nd = job.days | length -%}
+    {%- set _nr = job.rows | length -%}
+    {%- set _dw = ngettext("print day", "print days", _nd) -%}
+    {%- set _rw = ngettext("machine run", "machine runs", _nr) -%}
+    {%- set _first = job.first_day | date -%}
+    {%- if _nd == 1 -%}{%- set _range = _first -%}{%- else -%}{%- set _range = _first ~ " – " ~ (job.last_day | date) -%}{%- endif -%}
+    {{ _("Printed pages over %(n_days)s %(day_word)s (%(date_range)s) in %(n_runs)s %(run_word)s.", n_days=_nd, day_word=_dw, date_range=_range, n_runs=_nr, run_word=_rw) }}
+  </p>
+</div>
+
+<div class="figures">
+  <div class="figure">
+    <span class="figure__value">{{ job.sets | number }}</span>
+    <span class="figure__label">{{ _("Copies") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ job.sheets | number }}</span>
+    <span class="figure__label">{{ _("Sheets") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ job.proofs }}</span>
+    <span class="figure__label">{{ _("Proofs") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ job.proof_ratio }}%</span>
+    <span class="figure__label">{{ _("Proof share") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ job.runtime_s | duration }}</span>
+    <span class="figure__label">{{ _("Runtime net") }}</span>
+  </div>
+  {% for it in job | finishing %}
+  <div class="figure">
+    <span class="figure__value">{{ it.count | number }}</span>
+    <span class="figure__label">{{ ngettext(it.one, it.many, it.count) }}</span>
+  </div>
+  {% endfor %}
+</div>
+
+{% if multi_machine %}
+{# The job list shows an order once; here it is broken down per press. #}
+<section class="section">
+  <div class="section__head">
+    <h2>{{ _("By machine") }}</h2>
+    <p class="section__note">{{ _("This job ran on more than one press — or on one of several. Clicks, sheets and run time per machine.") }}</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>{{ _("Machine") }}</th><th class="r">{{ _("Runs") }}</th><th class="r">{{ _("Clicks") }}</th><th class="r">{{ _("Sheets") }}</th><th class="r">{{ _("Copies") }}</th><th class="r">{{ _("Runtime") }}</th></tr>
+      </thead>
+      <tbody>
+        {% for e in job.by_machine %}
+        <tr>
+          <td class="n">{{ e.machine_id }}</td>
+          <td class="r n">{{ e.runs | number }}</td>
+          <td class="r n">{{ e.clicks | number }}</td>
+          <td class="r n">{{ e.sheets | number }}</td>
+          <td class="r n">{{ e.sets | number }}</td>
+          <td class="r n">{{ e.runtime_s | duration }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="section__head">
+    <h2>{{ _("Timeline") }}</h2>
+    <p class="section__note">
+      {{ _("One marker per machine run in chronological order, height proportional to clicks. Proof means: one copy followed later by a production run — a heuristic from the data, not reported by the machine.") }}
+    </p>
+  </div>
+
+  <div class="timeline">
+    {% for run in job.rows %}
+    <span class="timeline__mark timeline__mark--{{ run.run_type_css }}" tabindex="0"
+          style="height: {{ run.band_h }}px"
+          aria-label="{{ run.starttime }}, {{ _(run.run_type) }}, {{ run.clicks }} {{ _('Clicks') }}">
+      <span class="timeline__tip">
+        {{ run.startdate | date }} {{ run.starttime }} · {{ _(run.run_type) }}<br>
+        <b>{{ run.clicks | number }}</b> {{ _("Clicks") }} · <b>{{ run.noffinishedsets | number }}</b> {{ _("Copies") }}<br>
+        {{ _("Runtime") }} <b>{{ run.runtime_s | duration }}</b>
+      </span>
+    </span>
+    {% endfor %}
+  </div>
+
+  <div class="legend">
+    <span class="legend__item"><span class="legend__swatch legend__swatch--proof"></span>{{ _("Proof") }} ({{ job.proofs }})</span>
+    <span class="legend__item"><span class="legend__swatch legend__swatch--production"></span>{{ _("Production") }} ({{ job.production_runs }})</span>
+    {% if job.singles %}<span class="legend__item"><span class="legend__swatch legend__swatch--single"></span>{{ _("Single copy") }} ({{ job.singles }})</span>{% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head">
+    <h2>{{ _("Machine runs") }}</h2>
+    <p class="section__note">
+      {{ _("Pause is the time since the end of the previous run of this job.") }}
+      {{ _("Folds count folded sheets, not folded products: a booklet made of seven sheets reports seven folds.") }}
+    </p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>{{ _("Day") }}</th>
+          <th>{{ _("Start") }}</th>
+          <th>{{ _("Type") }}</th>
+          <th class="r">{{ _("Copies") }}</th>
+          <th class="r">{{ _("Clicks") }}</th>
+          <th class="r">{{ _("Sheets") }}</th>
+          <th>{{ _("Paper") }}</th>
+          <th>{{ _("Finishing") }}</th>
+          <th class="r">{{ _("Runtime") }}</th>
+          <th class="r">{{ _("Pause") }}</th>
+          <th>{{ _("Result") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for run in job.rows %}
+        <tr>
+          <td class="n">{{ run.startdate | date }}</td>
+          <td class="n">{{ run.starttime }}</td>
+          <td><span class="tag tag--{{ run.run_type_css }}">{{ _(run.run_type) }}</span></td>
+          <td class="r n">{{ run.noffinishedsets | number }}</td>
+          <td class="r n">{{ run.clicks | number }}</td>
+          <td class="r n">{{ run.sheets | number }}</td>
+          <td>
+            <span class="medialist">
+              {% for m in run.media %}
+              <span class="medialist__row">
+                {% if run.media | length > 1 %}<span class="medialist__tray">T{{ m.tray }}</span>{% endif %}
+                {{ m.medianame or m.mediaformat }}{% if m.mediaweight %} · {{ m.mediaweight }} g{% endif %}
+              </span>
+              {% endfor %}
+              {% if not run.media %}<span class="muted">—</span>{% endif %}
+            </span>
+          </td>
+          <td>
+            {% set items = run | finishing %}
+            {% if items %}
+            <span class="finishing">
+              {% for it in items %}
+              <span class="finishing__row">
+                <span class="finishing__n">{{ it.count | number }}</span>
+                <span class="finishing__label">{{ ngettext(it.one, it.many, it.count) }}</span>
+              </span>
+              {% endfor %}
+            </span>
+            {% else %}<span class="muted">—</span>{% endif %}
+          </td>
+          <td class="r n">{{ run.runtime_s | duration }}</td>
+          <td class="r n">{{ run.pause_s | duration }}</td>
+          <td>{% if run.done %}<span class="muted">{{ _(run.result_label) }}</span>{% else %}<span class="tag tag--plain">{{ _(run.result_label) }}</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="grid2">
+  <section>
+    <div class="section__head"><h2>{{ _("Clicks by format") }}</h2></div>
+    <table class="kv">
+      <tr><td>A4 {{ _("Black/White") }}</td><td>{{ job.a4bw | number }}</td></tr>
+      <tr><td>A4 {{ _("Color") }}</td><td>{{ job.a4c | number }}</td></tr>
+      <tr><td>A3 {{ _("Black/White") }}</td><td>{{ job.a3bw | number }}</td></tr>
+      <tr><td>A3 {{ _("Color") }}</td><td>{{ job.a3c | number }}</td></tr>
+      <tr><td>XL {{ _("Black/White") }}</td><td>{{ job.xlbw | number }}</td></tr>
+      <tr><td>XL {{ _("Color") }}</td><td>{{ job.xlc | number }}</td></tr>
+      <tr><td><strong>{{ _("Total") }}</strong></td><td><strong>{{ job.clicks | number }}</strong></td></tr>
+    </table>
+    <p class="hint">
+      {{ _("The click class follows the printer's billing logic, not the paper format: business cards on 220×315 count as A4.") }}
+    </p>
+  </section>
+
+  <section>
+    <div class="section__head"><h2>{{ _("Material") }}</h2></div>
+    <table class="kv">
+      {% for m in job.material %}
+      <tr>
+        <td>
+          {{ m.medianame or m.mediaformat }}
+          {% if m.mediaweight %}<span class="muted"> · {{ m.mediaweight }} g</span>{% endif %}
+          {% if m.medianame and m.mediaformat %}<br><span class="muted" style="font-size:12.5px">{{ m.mediaformat }}</span>{% endif %}
+        </td>
+        <td>{{ m.sheets | number }} {{ _("sheets") }}</td>
+      </tr>
+      {% endfor %}
+      {% if not job.material %}<tr><td class="muted">{{ _("No media information") }}</td><td></td></tr>{% endif %}
+    </table>
+    <p class="hint">
+      {{ _("Sheets = simplex + rounded-up half of duplex pages. Also captures covers from a second tray.") }}
+    </p>
+  </section>
+</div>
+
+<section class="section">
+  <div class="section__head"><h2>{{ _("Raw data") }}</h2></div>
+  {% for run in job.rows %}
+  <details class="rawbox">
+    <summary>{{ run.startdate | date }} {{ run.starttime }} · Job {{ run.jobid }} · {{ _("Line") }} {{ run.line_seq }}</summary>
+    <pre>{% for k, v in run.raw | dictsort %}{{ "%-22s"|format(k) }} {{ v }}
+{% endfor %}</pre>
+  </details>
+  {% endfor %}
+</section>
+{% endblock %}

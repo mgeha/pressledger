@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Jobs") }} — PressLedger{% endblock %}
+
+{% block content %}
+<div class="label">
+  <p class="label__rubric">{{ _("Reporting") }}</p>
+  <div class="label__body">
+    <h1>{{ _("Jobs") }}</h1>
+    <form method="post" action="/sync">
+      <button class="btn" type="submit">{{ _("Sync now") }}</button>
+    </form>
+  </div>
+</div>
+
+<div class="figures">
+  <div class="figure">
+    <span class="figure__value">{{ jobs | length | number }}</span>
+    <span class="figure__label">{{ _("Jobs") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.clicks | number }}</span>
+    <span class="figure__label">{{ _("Clicks") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.sets | number }}</span>
+    <span class="figure__label">{{ _("Copies") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.sheets | number }}</span>
+    <span class="figure__label">{{ _("Sheets") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.runtime_s | duration }}</span>
+    <span class="figure__label">{{ _("Runtime") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.proofs | number }}</span>
+    <span class="figure__label">{{ _("Proofs") }}</span>
+  </div>
+  {% if totals.folds %}
+  <div class="figure">
+    <span class="figure__value">{{ totals.folds | number }}</span>
+    <span class="figure__label">{{ ngettext("Fold", "Folds", totals.folds) }}</span>
+  </div>
+  {% endif %}
+  {% if totals.booklets %}
+  <div class="figure">
+    <span class="figure__value">{{ totals.booklets | number }}</span>
+    <span class="figure__label">{{ ngettext("Booklet", "Booklets", totals.booklets) }}</span>
+  </div>
+  {% endif %}
+</div>
+
+<form class="filters" id="filter"
+      hx-get="/jobs/table"
+      hx-target="#table"
+      hx-swap="outerHTML"
+      hx-trigger="input from:#q changed delay:250ms, change from:#filter"
+      hx-push-url="false">
+  <div class="field">
+    <label class="field__label" for="q">{{ _("Search") }}</label>
+    <input type="search" id="q" name="q" value="{{ q or '' }}"
+           placeholder="{{ _('Job or file name') }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_from">{{ _("From") }}</label>
+    <input type="date" id="date_from" name="date_from" value="{{ date_from or '' }}" min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_to">{{ _("To") }}</label>
+    <input type="date" id="date_to" name="date_to" value="{{ date_to or '' }}" min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="jobtype">{{ _("Job type") }}</label>
+    <select id="jobtype" name="jobtype">
+      <option value="IP" {% if jobtype == 'IP' %}selected{% endif %}>IP — {{ _("Print jobs") }}</option>
+      <option value="AP" {% if jobtype == 'AP' %}selected{% endif %}>AP — {{ _("Direct print") }}</option>
+      <option value="" {% if not jobtype %}selected{% endif %}>{{ _("all") }}</option>
+    </select>
+  </div>
+  {% include "_machine_filter.html" %}
+  <input type="hidden" name="sort" value="{{ sort }}">
+  <input type="hidden" name="desc" value="{{ 1 if desc else 0 }}">
+  <a class="btn btn--ghost" href="/jobs">{{ _("Reset") }}</a>
+</form>
+
+{% include "_table.html" %}
+
+<p class="hint">
+  {{ _("A job is summed across all print days — follow-up deliveries do not appear as a separate job. Clicks are printed pages and the billing figure; sheets are the paper consumption.") }}
+</p>
+{% endblock %}

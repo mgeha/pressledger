@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Machine") }} — PressLedger{% endblock %}
+
+{% block content %}
+<div class="label">
+  <p class="label__rubric">{{ _("Data collection") }}</p>
+  <div class="label__body">
+    <h1>{{ _("Machine") }}</h1>
+    <form method="post" action="/sync">
+      <input type="hidden" name="redirect_to" value="/status">
+      <button class="btn" type="submit">{{ _("Sync now") }}</button>
+    </form>
+  </div>
+</div>
+
+<p class="hint">
+  {{ _("PressLedger fetches accounting files from every configured machine every %(interval)s minutes, one after the other. A press does not run around the clock — a missed connection is normal, not an error. The machine holds only 99 files and then deletes the oldest; the local archive at %(raw_dir)s is the actual long-term storage.", interval=interval, raw_dir=raw_dir) }}
+</p>
+
+<div class="figures">
+  <div class="figure">
+    <span class="figure__value">{{ machines | length }}</span>
+    <span class="figure__label">{{ _("Machines") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ total_rows | number }}</span>
+    <span class="figure__label">{{ _("Rows in DB") }}</span>
+  </div>
+</div>
+
+{% for b in blocks %}
+<section class="section">
+  <div class="section__head">
+    <h2>{{ b.machine.name }}{% if multi_machine %} <span class="muted">{{ b.machine.id }}</span>{% endif %}</h2>
+    <p class="section__note">
+      {{ b.machine.url }} ·
+      {% if b.status.online %}<span class="tag tag--proof">{{ _("reachable") }}</span>
+      {% else %}<span class="tag tag--plain">{{ _("offline") }}</span>{% endif %}
+    </p>
+  </div>
+
+  <div class="figures">
+    <div class="figure">
+      <span class="figure__value">{{ b.status.last_success.finished_at | timestamp if b.status.last_success else '—' }}</span>
+      <span class="figure__label">{{ _("Last contact") }}</span>
+    </div>
+    <div class="figure">
+      <span class="figure__value">{{ b.status.days | length }}</span>
+      <span class="figure__label">{{ _("Days imported") }}</span>
+    </div>
+  </div>
+
+  <div class="section__head">
+    <h3>{{ _("Imported days") }}</h3>
+    <p class="section__note">{{ _("CSV is a completed day, ACL the current one. The ACL day is re-imported on every sync run.") }}</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>{{ _("Day") }}</th><th>{{ _("Source") }}</th><th>{{ _("File") }}</th><th class="r">{{ _("Rows") }}</th><th>{{ _("Last read") }}</th></tr>
+      </thead>
+      <tbody>
+        {% for t in b.status.days %}
+        <tr>
+          <td class="n">{{ t.source_date | date }}</td>
+          <td><span class="tag tag--plain">{{ t.source_type }}</span></td>
+          <td class="n muted">{{ t.filename }}</td>
+          <td class="r n">{{ t.row_count | number }}</td>
+          <td class="n">{{ t.last_synced | timestamp }}</td>
+        </tr>
+        {% endfor %}
+        {% if not b.status.days %}
+        <tr><td colspan="5" class="muted">{{ _("No data imported yet.") }}</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section__head">
+    <h3>{{ _("Last runs") }}</h3>
+    <p class="section__note">{{ _("Without a connection nothing is changed — existing data is preserved.") }}</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>{{ _("Start") }}</th><th>{{ _("Result") }}</th><th class="r">{{ _("Files") }}</th><th class="r">{{ _("Imported") }}</th><th class="r">{{ _("Rows") }}</th><th>{{ _("Note") }}</th></tr>
+      </thead>
+      <tbody>
+        {% for r in b.history %}
+        <tr>
+          <td class="n">{{ r.started_at | timestamp }}</td>
+          <td>
+            {% if r.ok %}<span class="tag tag--proof">{{ _("reachable") }}</span>
+            {% else %}<span class="tag tag--plain">{{ _("offline") }}</span>{% endif %}
+          </td>
+          <td class="r n">{{ r.files_seen }}</td>
+          <td class="r n">{{ r.files_imported }}</td>
+          <td class="r n">{{ r.rows_imported | number }}</td>
+          <td class="muted">{{ r.error or '—' }}</td>
+        </tr>
+        {% endfor %}
+        {% if not b.history %}
+        <tr><td colspan="6" class="muted">{{ _("No run recorded yet.") }}</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

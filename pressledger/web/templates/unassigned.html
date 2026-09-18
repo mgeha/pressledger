@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Unassigned") }} — PressLedger{% endblock %}
+
+{% block content %}
+<div class="label">
+  <p class="label__rubric">{{ _("Data quality") }}</p>
+  <div class="label__body">
+    <h1>{{ _("Runs without a job") }}</h1>
+  </div>
+</div>
+
+<p class="hint">
+  {{ _("These print runs could not be assigned to a job: the file naming rule of this installation finds no key in their file name. For a workflow job that usually means the file was not named according to convention. Calibration and service runs of the machine are left out — they legitimately have no job and are reported under Own use.") }}
+</p>
+
+<form class="filters" id="filter"
+      hx-get="/unassigned/table"
+      hx-target="#unassigned"
+      hx-swap="outerHTML"
+      hx-trigger="input from:#q changed delay:250ms, change from:#filter"
+      hx-push-url="false">
+  <div class="field">
+    <label class="field__label" for="q">{{ _("Search") }}</label>
+    <input type="search" id="q" name="q" value="{{ q or '' }}" placeholder="{{ _('File name') }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_from">{{ _("From") }}</label>
+    <input type="date" id="date_from" name="date_from" value="{{ date_from or '' }}"
+           min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_to">{{ _("To") }}</label>
+    <input type="date" id="date_to" name="date_to" value="{{ date_to or '' }}"
+           min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="jobtype">{{ _("Selection") }}</label>
+    <select id="jobtype" name="filter">
+      <option value="" {% if not filter %}selected{% endif %}>{{ _("all") }}</option>
+      <option value="AP" {% if filter == 'AP' %}selected{% endif %}>AP — {{ _("Direct print from workstation") }}</option>
+      <option value="IP" {% if filter == 'IP' %}selected{% endif %}>IP — {{ _("Workflow, not assigned") }}</option>
+    </select>
+  </div>
+  {% include "_machine_filter.html" %}
+  <a class="btn btn--ghost" href="/unassigned">{{ _("Reset") }}</a>
+</form>
+
+{% include "_unassigned_table.html" %}
+{% endblock %}

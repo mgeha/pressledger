@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Own use") }} — PressLedger{% endblock %}
+
+{% block content %}
+<div class="label">
+  <p class="label__rubric">{{ _("Machine") }}</p>
+  <div class="label__body">
+    <h1>{{ _("Own use") }}</h1>
+  </div>
+</div>
+
+<p class="hint">
+  {{ _("What the press printed for itself: calibration, service runs and meter reports. None of it is billable, but it consumes clicks and stock like any other job. Selected by job type, so this page is unaffected by how runs are grouped elsewhere.") }}
+</p>
+
+<form class="filters" id="filter"
+      hx-get="/own-use/table"
+      hx-target="#own-use"
+      hx-swap="outerHTML"
+      hx-trigger="input from:#q changed delay:250ms, change from:#filter"
+      hx-push-url="false">
+  <div class="field">
+    <label class="field__label" for="q">{{ _("Search") }}</label>
+    <input type="search" id="q" name="q" value="{{ q or '' }}" placeholder="{{ _('File name') }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_from">{{ _("From") }}</label>
+    <input type="date" id="date_from" name="date_from" value="{{ date_from or '' }}"
+           min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_to">{{ _("To") }}</label>
+    <input type="date" id="date_to" name="date_to" value="{{ date_to or '' }}"
+           min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  {% include "_machine_filter.html" %}
+  <a class="btn btn--ghost" href="/own-use">{{ _("Reset") }}</a>
+</form>
+
+{% include "_own_use_table.html" %}
+{% endblock %}

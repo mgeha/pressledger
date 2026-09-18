@@ -1,0 +1,13 @@
+{# Machine filter for the filter bars, shown only with more than one press.
+   A row filter: on /jobs it narrows a job to that press's share. #}
+{% if multi_machine %}
+  <div class="field">
+    <label class="field__label" for="machine">{{ _("Machine") }}</label>
+    <select id="machine" name="machine">
+      <option value="" {% if not machine %}selected{% endif %}>{{ _("all") }}</option>
+      {% for m in machines %}
+        <option value="{{ m.id }}" {% if machine == m.id %}selected{% endif %}>{{ m.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+{% endif %}

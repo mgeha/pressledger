@@ -1,0 +1,87 @@
+# PressLedger — configuration.
+# Copy to pressledger.toml and adjust. That file is not committed to the repo.
+# Another path: uv run pressledger --config /path/to/pressledger.toml serve
+#
+# Unknown sections and keys are refused rather than ignored: a typo must not
+# silently leave a setting at its default. Relative paths are relative to THIS
+# file, not to the working directory.
+
+[server]
+# Bind address and port of the web interface. Loopback by default: the pages
+# carry no login, so a wider bind needs a trusted network or a reverse proxy.
+# host = "127.0.0.1"
+# port = 8000
+
+[paths]
+# db  = "data/pressledger.sqlite"
+# The raw archive, one directory per machine below it: data/raw/<machine id>/.
+# Long-term storage — the press itself keeps only 99 files and then deletes the
+# oldest. Never delete anything from here.
+# raw = "data/raw"
+
+[sync]
+# Minutes between automatic syncs while `serve` is running. The machines are
+# synced one after the other: SQLite allows a single writer.
+# interval_min = 30
+# Network timeout per request in seconds. Keep it short — a powered-off press
+# would otherwise hold up the next one for that long.
+# http_timeout = 10
+
+[ui]
+# Company name shown next to the product name in the page header.
+# site_name = "Example GmbH"
+# CSS loaded after the default one, so its variables and rules can be
+# overridden (fonts, colours) without committing a brand to the repo.
+# custom_css = "/etc/pressledger/custom.css"
+# Interface language: en (default) or de. Switchable per session in the UI.
+# lang = "en"
+
+[jobs]
+# How several print runs are folded into one job: a regular expression on the
+# job name, capture group 1 is the key. The rule is not machine-specific — an
+# order printed on two presses is one job.
+#
+# Leave it out and PressLedger does not group at all: one row per print run,
+# /unassigned disappears, and a proof cannot be told from a single copy.
+#
+# TOML literal strings (single quotes) need no backslash escaping.
+#
+# Six-digit order number at the start of the file name (105774_Customer_Job.pdf):
+# key_pattern = '^(\d{6})_'
+# Everything before the first underscore:
+# key_pattern = '^([^_]+)_'
+# The whole file name, so reprints of one file group together:
+# key_pattern = '^(.+)$'
+#
+# Applied when a query runs, not on import: changing it needs a restart, never a
+# reimport. An invalid regular expression stops the start rather than falling
+# back to "no grouping".
+
+[api]
+# Shared token of the export API (/api/v1/machines, /days, /runs), sent as
+# `Authorization: Bearer <token>`. A token in the query string is not accepted —
+# URLs end up in logs.
+#
+# Without this key the export routes return 503: the rows carry job names, which
+# may carry customer names. The web pages stay open on the internal network.
+#
+# Generate one: python -c "import secrets; print(secrets.token_urlsafe(32))"
+# token = ""
+
+# One [[machine]] section per press. At least one is required.
+#
+# id     assigned here, and it is what every stored row and every archive
+#        directory carries. Letters, digits, dash, underscore — no dot, no
+#        colon. Do not change it later without rebuilding: it is part of the
+#        primary key.
+# name   shown in the interface. Defaults to the id.
+# url    base URL of the accounting endpoint, no trailing slash.
+[[machine]]
+id   = "v1000-01"
+name = "imagePRESS V1000"
+url  = "http://printer.local"
+
+# [[machine]]
+# id   = "v1000-02"
+# name = "imagePRESS V1000 (2)"
+# url  = "http://printer2.local"
