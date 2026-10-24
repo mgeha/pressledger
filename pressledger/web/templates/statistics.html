@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ _("Statistics") }} — PressLedger{% endblock %}
+
+{% block content %}
+<div class="label">
+  <p class="label__rubric">{{ _("Production") }}</p>
+  <div class="label__body">
+    <h1>{{ _("Statistics") }}</h1>
+  </div>
+</div>
+
+<p class="hint">
+  {{ _("Every click per calendar month, as the machine counts them: customer jobs, proofs and the machine's own use. Each run counts in the month it started; a job with runs in two months counts in both. The month opens its job list.") }}
+</p>
+
+<form class="filters" id="filter"
+      hx-get="/statistics/table"
+      hx-target="#statistics"
+      hx-swap="outerHTML"
+      hx-trigger="change from:#filter"
+      hx-push-url="false">
+  <div class="field">
+    <label class="field__label" for="date_from">{{ _("From") }}</label>
+    <input type="date" id="date_from" name="date_from" value="{{ date_from or '' }}"
+           min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="date_to">{{ _("To") }}</label>
+    <input type="date" id="date_to" name="date_to" value="{{ date_to or '' }}"
+           min="{{ limits[0] or '' }}" max="{{ limits[1] or '' }}">
+  </div>
+  {% include "_machine_filter.html" %}
+  <a class="btn btn--ghost" href="/statistics">{{ _("Reset") }}</a>
+</form>
+
+{% include "_statistics_table.html" %}
+{% endblock %}

@@ -12,44 +12,7 @@
   </div>
 </div>
 
-<div class="figures">
-  <div class="figure">
-    <span class="figure__value">{{ jobs | length | number }}</span>
-    <span class="figure__label">{{ _("Jobs") }}</span>
-  </div>
-  <div class="figure">
-    <span class="figure__value">{{ totals.clicks | number }}</span>
-    <span class="figure__label">{{ _("Clicks") }}</span>
-  </div>
-  <div class="figure">
-    <span class="figure__value">{{ totals.sets | number }}</span>
-    <span class="figure__label">{{ _("Copies") }}</span>
-  </div>
-  <div class="figure">
-    <span class="figure__value">{{ totals.sheets | number }}</span>
-    <span class="figure__label">{{ _("Sheets") }}</span>
-  </div>
-  <div class="figure">
-    <span class="figure__value">{{ totals.runtime_s | duration }}</span>
-    <span class="figure__label">{{ _("Runtime") }}</span>
-  </div>
-  <div class="figure">
-    <span class="figure__value">{{ totals.proofs | number }}</span>
-    <span class="figure__label">{{ _("Proofs") }}</span>
-  </div>
-  {% if totals.folds %}
-  <div class="figure">
-    <span class="figure__value">{{ totals.folds | number }}</span>
-    <span class="figure__label">{{ ngettext("Fold", "Folds", totals.folds) }}</span>
-  </div>
-  {% endif %}
-  {% if totals.booklets %}
-  <div class="figure">
-    <span class="figure__value">{{ totals.booklets | number }}</span>
-    <span class="figure__label">{{ ngettext("Booklet", "Booklets", totals.booklets) }}</span>
-  </div>
-  {% endif %}
-</div>
+{% include "_jobs_figures.html" %}
 
 <form class="filters" id="filter"
       hx-get="/jobs/table"

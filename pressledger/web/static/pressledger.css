@@ -435,6 +435,7 @@ tfoot td.r { text-align: right; }
 }
 
 .hint { font-size: 17px; line-height: 1.55; margin: 16px 0 0; max-width: 74ch; }
+.figures-note { font-size: 14px; color: var(--text-2); margin: 10px 0 0; }
 
 .medialist { display: flex; flex-direction: column; gap: 3px; font-size: 14px; font-weight: 400; }
 .medialist__row { white-space: nowrap; }

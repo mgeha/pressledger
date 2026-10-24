@@ -337,6 +337,27 @@ def job_list(
     return rows
 
 
+def keyless_clicks(conn, date_from=None, date_to=None, q=None, jobtype="IP", machine=None) -> dict:
+    """Clicks the job list cannot show under the same filter: runs without a key.
+
+    `own_use` is the SYSTEM share, `unassigned` the rest. Job list plus both is
+    every click the filter selects, which is what /statistics counts.
+    """
+    filters, params = _filters(date_from, date_to, q, jobtype, None, machine=machine)
+    params["system"] = SYSTEM_JOBTYPE
+    sql = (
+        _base_cte(filters)
+        + """
+        SELECT
+            COALESCE(SUM(CASE WHEN jobtype = :system THEN clicks END), 0)  AS own_use,
+            COALESCE(SUM(CASE WHEN jobtype <> :system THEN clicks END), 0) AS unassigned
+        FROM cls
+        WHERE job_key IS NULL
+    """
+    )
+    return dict(conn.execute(sql, params).fetchone())
+
+
 def job_detail(conn, job_key: str) -> dict | None:
     """All rows of a job chronologically, with media and key figures."""
     filters, params = _filters(None, None, None, None, None)
@@ -647,6 +668,44 @@ def own_use_months(conn, date_from=None, date_to=None, q=None, machine=None) -> 
             COUNT(*)                AS runs,
             SUM(clicks)             AS clicks,
             SUM(sheets)             AS sheets
+        FROM cls
+        WHERE startdate <> ''
+        GROUP BY month
+        ORDER BY month DESC
+    """
+    )
+    return [dict(r) for r in conn.execute(sql, params)]
+
+
+def monthly_stats(conn, date_from=None, date_to=None, machine=None) -> list[dict]:
+    """Every run per calendar month of its start, newest first — all job types.
+
+    Summed over all presses unless one is filtered. A job with runs in two months
+    counts in both, so `jobs` does not add up across months. `own_clicks` is the
+    SYSTEM share of `clicks`, with or without a job key; `unassigned_clicks` the
+    keyless runs of every other job type, so no click lands in both.
+    """
+    filters, params = _filters(date_from, date_to, None, None, None, machine=machine)
+    params["system"] = SYSTEM_JOBTYPE
+    sql = (
+        _base_cte(filters)
+        + f"""
+        SELECT
+            substr(startdate, 1, 7) AS month,
+            COUNT(DISTINCT job_key) AS jobs,
+            COUNT(*)                AS runs,
+            SUM({_RUNTIME_S})       AS runtime_s,
+            SUM(clicks)             AS clicks,
+            SUM(sheets)             AS sheets,
+            SUM(CASE WHEN jobtype = :system THEN clicks ELSE 0 END) AS own_clicks,
+            SUM(CASE WHEN job_key IS NULL AND jobtype <> :system
+                     THEN clicks ELSE 0 END) AS unassigned_clicks,
+            SUM(nofprinteda4bw)     AS a4bw,
+            SUM(nofprinteda4c)      AS a4c,
+            SUM(nofprinteda3bw)     AS a3bw,
+            SUM(nofprinteda3c)      AS a3c,
+            SUM(nofprintedXLbw)     AS xlbw,
+            SUM(nofprintedXLc)      AS xlc
         FROM cls
         WHERE startdate <> ''
         GROUP BY month

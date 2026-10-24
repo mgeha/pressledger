@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PressLedger 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 09:41+0200\n"
+"POT-Creation-Date: 2026-10-15 14:46+0200\n"
 "PO-Revision-Date: 2026-08-04 00:00+0000\n"
 "Last-Translator: \n"
 "Language: de\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 #: pressledger/reports.py:44 pressledger/web/templates/job_detail.html:117
+#: pressledger/web/templates/statistics.html:6
 msgid "Production"
 msgstr "Produktion"
 
@@ -82,7 +83,7 @@ msgstr[1] "Rillungen"
 #: pressledger/web/templates/_own_use_table.html:28
 #: pressledger/web/templates/_table.html:8
 #: pressledger/web/templates/_unassigned_table.html:23
-#: pressledger/web/templates/base.html:20
+#: pressledger/web/templates/base.html:21
 #: pressledger/web/templates/job_detail.html:74
 #: pressledger/web/templates/own_use.html:6
 #: pressledger/web/templates/status.html:2
@@ -91,7 +92,7 @@ msgid "Machine"
 msgstr "Maschine"
 
 #: pressledger/web/templates/_machine_filter.html:7
-#: pressledger/web/templates/jobs.html:78
+#: pressledger/web/templates/jobs.html:87
 #: pressledger/web/templates/paper.html:38
 #: pressledger/web/templates/unassigned.html:39
 msgid "all"
@@ -100,6 +101,7 @@ msgstr "alle"
 #: pressledger/web/templates/_own_use_table.html:5
 #: pressledger/web/templates/_own_use_table.html:29
 #: pressledger/web/templates/_own_use_table.html:65
+#: pressledger/web/templates/_statistics_table.html:46
 #: pressledger/web/templates/_unassigned_table.html:26
 #: pressledger/web/templates/job_detail.html:74
 msgid "Runs"
@@ -109,6 +111,8 @@ msgstr "Läufe"
 #: pressledger/web/templates/_own_use_table.html:9
 #: pressledger/web/templates/_own_use_table.html:30
 #: pressledger/web/templates/_own_use_table.html:66
+#: pressledger/web/templates/_statistics_table.html:5
+#: pressledger/web/templates/_statistics_table.html:41
 #: pressledger/web/templates/_table.html:11
 #: pressledger/web/templates/_unassigned_table.html:9
 #: pressledger/web/templates/_unassigned_table.html:28
@@ -126,6 +130,8 @@ msgstr "Klicks"
 #: pressledger/web/templates/_own_use_table.html:67
 #: pressledger/web/templates/_paper_table.html:9
 #: pressledger/web/templates/_paper_table.html:34
+#: pressledger/web/templates/_statistics_table.html:19
+#: pressledger/web/templates/_statistics_table.html:44
 #: pressledger/web/templates/_table.html:12
 #: pressledger/web/templates/_unassigned_table.html:13
 #: pressledger/web/templates/_unassigned_table.html:29
@@ -178,6 +184,7 @@ msgstr ""
 "längeren Zeitraum ablesbar."
 
 #: pressledger/web/templates/_own_use_table.html:64
+#: pressledger/web/templates/_statistics_table.html:32
 msgid "Month"
 msgstr "Monat"
 
@@ -205,7 +212,7 @@ msgid "Tray pulls"
 msgstr "Schachtzüge"
 
 #: pressledger/web/templates/_paper_table.html:30
-#: pressledger/web/templates/base.html:18
+#: pressledger/web/templates/base.html:19
 #: pressledger/web/templates/job_detail.html:140
 #: pressledger/web/templates/paper.html:2
 #: pressledger/web/templates/paper.html:8
@@ -225,6 +232,7 @@ msgstr "Farbe"
 
 # Navigation
 #: pressledger/web/templates/_paper_table.html:37
+#: pressledger/web/templates/_statistics_table.html:45
 #: pressledger/web/templates/base.html:16
 #: pressledger/web/templates/job_detail.html:5
 #: pressledger/web/templates/jobs.html:2 pressledger/web/templates/jobs.html:8
@@ -255,6 +263,58 @@ msgstr "Kein Papierverbrauch im gewählten Zeitraum."
 msgid "Reset the filter or choose a different job type."
 msgstr "Filter zurücksetzen oder einen anderen Jobtyp wählen."
 
+#: pressledger/web/templates/_statistics_table.html:10
+#: pressledger/web/templates/_statistics_table.html:42
+msgid "of which unassigned"
+msgstr "davon ohne Auftragsnr."
+
+#: pressledger/web/templates/_statistics_table.html:15
+#: pressledger/web/templates/_statistics_table.html:43
+msgid "of which own use"
+msgstr "davon Eigenbedarf"
+
+#: pressledger/web/templates/_statistics_table.html:23
+#: pressledger/web/templates/_statistics_table.html:47
+#: pressledger/web/templates/_table.html:14
+#: pressledger/web/templates/_unassigned_table.html:30
+#: pressledger/web/templates/job_detail.html:74
+#: pressledger/web/templates/job_detail.html:109
+#: pressledger/web/templates/job_detail.html:142
+#: pressledger/web/templates/jobs.html:34
+msgid "Runtime"
+msgstr "Laufzeit"
+
+#: pressledger/web/templates/_statistics_table.html:33
+msgid "A4 b/w"
+msgstr "A4 s/w"
+
+#: pressledger/web/templates/_statistics_table.html:34
+msgid "A4 colour"
+msgstr "A4 Farbe"
+
+#: pressledger/web/templates/_statistics_table.html:35
+msgid "A3 b/w"
+msgstr "A3 s/w"
+
+#: pressledger/web/templates/_statistics_table.html:36
+msgid "A3 colour"
+msgstr "A3 Farbe"
+
+# Figure labels
+#: pressledger/web/templates/_statistics_table.html:38
+msgid "XL b/w"
+msgstr "XL s/w"
+
+# Figure labels
+#: pressledger/web/templates/_statistics_table.html:39
+msgid "XL colour"
+msgstr "XL Farbe"
+
+# Empty states
+#: pressledger/web/templates/_statistics_table.html:79
+msgid "No runs in the selected period."
+msgstr "Keine Läufe im gewählten Zeitraum."
+
 #: pressledger/web/templates/_table.html:6
 #: pressledger/web/templates/job_detail.html:8
 msgid "Job"
@@ -279,15 +339,6 @@ msgstr "Klicks Farbe"
 #: pressledger/web/templates/jobs.html:26
 msgid "Copies"
 msgstr "Exemplare"
-
-#: pressledger/web/templates/_table.html:14
-#: pressledger/web/templates/_unassigned_table.html:30
-#: pressledger/web/templates/job_detail.html:74
-#: pressledger/web/templates/job_detail.html:109
-#: pressledger/web/templates/job_detail.html:142
-#: pressledger/web/templates/jobs.html:34
-msgid "Runtime"
-msgstr "Laufzeit"
 
 #: pressledger/web/templates/_table.html:15
 #: pressledger/web/templates/_unassigned_table.html:31
@@ -337,46 +388,52 @@ msgstr "Jeder Lauf in dieser Auswahl ist einem Auftrag zugeordnet."
 msgid "Unassigned"
 msgstr "Nicht zugeordnet"
 
-#: pressledger/web/templates/base.html:19
+#: pressledger/web/templates/base.html:18
+#: pressledger/web/templates/statistics.html:2
+#: pressledger/web/templates/statistics.html:8
+msgid "Statistics"
+msgstr "Statistik"
+
+#: pressledger/web/templates/base.html:20
 #: pressledger/web/templates/own_use.html:2
 #: pressledger/web/templates/own_use.html:8
 msgid "Own use"
 msgstr "Eigenverbrauch"
 
 # Status bar
-#: pressledger/web/templates/base.html:29
+#: pressledger/web/templates/base.html:30
 msgid "Printer reachable"
 msgstr "Drucker erreichbar"
 
-#: pressledger/web/templates/base.html:29
+#: pressledger/web/templates/base.html:30
 msgid "Sync"
 msgstr "Sync"
 
-#: pressledger/web/templates/base.html:34
+#: pressledger/web/templates/base.html:35
 msgid "Machine offline"
 msgstr "Maschine offline"
 
-#: pressledger/web/templates/base.html:34
+#: pressledger/web/templates/base.html:35
 msgid "last sync"
 msgstr "letzter Sync"
 
-#: pressledger/web/templates/base.html:39
+#: pressledger/web/templates/base.html:40
 msgid "Machine not yet reached"
 msgstr "Maschine noch nicht erreicht"
 
-#: pressledger/web/templates/base.html:39
+#: pressledger/web/templates/base.html:40
 msgid "attempt"
 msgstr "Versuch"
 
-#: pressledger/web/templates/base.html:44
+#: pressledger/web/templates/base.html:45
 msgid "No sync yet"
 msgstr "Noch kein Sync"
 
-#: pressledger/web/templates/base.html:51
+#: pressledger/web/templates/base.html:52
 msgid "Switch to English"
 msgstr "Auf Englisch umschalten"
 
-#: pressledger/web/templates/base.html:53
+#: pressledger/web/templates/base.html:54
 msgid "Switch to German"
 msgstr "Auf Deutsch umschalten"
 
@@ -537,57 +594,81 @@ msgstr "Auswertung"
 msgid "Sync now"
 msgstr "Jetzt synchronisieren"
 
+#: pressledger/web/templates/jobs.html:55
+msgid "Not in the list, because the runs carry no job number:"
+msgstr "Nicht in der Liste, weil die Läufe keine Auftragsnummer tragen:"
+
+#: pressledger/web/templates/jobs.html:56
+msgid "clicks unassigned"
+msgstr "Klicks ohne Auftragsnr."
+
+#: pressledger/web/templates/jobs.html:58
+msgid "clicks own use"
+msgstr "Klicks Eigenbedarf"
+
+#: pressledger/web/templates/jobs.html:59
+msgid "together"
+msgstr "zusammen"
+
+# Figure labels
+#: pressledger/web/templates/jobs.html:59
+msgid "clicks"
+msgstr "Klicks"
+
 # Filter labels
-#: pressledger/web/templates/jobs.html:61
+#: pressledger/web/templates/jobs.html:70
 #: pressledger/web/templates/own_use.html:23
 #: pressledger/web/templates/paper.html:23
 #: pressledger/web/templates/unassigned.html:23
 msgid "Search"
 msgstr "Suche"
 
-#: pressledger/web/templates/jobs.html:63
+#: pressledger/web/templates/jobs.html:72
 msgid "Job or file name"
 msgstr "Auftrag oder Dateiname"
 
-#: pressledger/web/templates/jobs.html:66
+#: pressledger/web/templates/jobs.html:75
 #: pressledger/web/templates/own_use.html:27
 #: pressledger/web/templates/paper.html:28
+#: pressledger/web/templates/statistics.html:23
 #: pressledger/web/templates/unassigned.html:27
 msgid "From"
 msgstr "Von"
 
-#: pressledger/web/templates/jobs.html:70
+#: pressledger/web/templates/jobs.html:79
 #: pressledger/web/templates/own_use.html:32
 #: pressledger/web/templates/paper.html:32
+#: pressledger/web/templates/statistics.html:28
 #: pressledger/web/templates/unassigned.html:32
 msgid "To"
 msgstr "Bis"
 
-#: pressledger/web/templates/jobs.html:74
+#: pressledger/web/templates/jobs.html:83
 #: pressledger/web/templates/paper.html:36
 msgid "Job type"
 msgstr "Jobtyp"
 
 # Dropdown options
-#: pressledger/web/templates/jobs.html:76
+#: pressledger/web/templates/jobs.html:85
 #: pressledger/web/templates/paper.html:39
 msgid "Print jobs"
 msgstr "Druckjobs"
 
-#: pressledger/web/templates/jobs.html:77
+#: pressledger/web/templates/jobs.html:86
 #: pressledger/web/templates/paper.html:41
 msgid "Direct print"
 msgstr "Direktdruck"
 
-#: pressledger/web/templates/jobs.html:84
+#: pressledger/web/templates/jobs.html:93
 #: pressledger/web/templates/own_use.html:37
 #: pressledger/web/templates/paper.html:47
+#: pressledger/web/templates/statistics.html:33
 #: pressledger/web/templates/unassigned.html:45
 msgid "Reset"
 msgstr "Zurücksetzen"
 
 # Jobs page hint
-#: pressledger/web/templates/jobs.html:90
+#: pressledger/web/templates/jobs.html:99
 msgid ""
 "A job is summed across all print days — follow-up deliveries do not "
 "appear as a separate job. Clicks are printed pages and the billing "
@@ -628,8 +709,8 @@ msgid ""
 msgstr ""
 "Bogen = einseitig + aufgerundet halbe Duplexseiten; Duplexseiten zählt "
 "die Maschine als Seiten, nicht als Bogen. Eine Sorte ist die Kombination "
-"aus Medienname, Format, Grammatur und Papierfarbe — bleibt der "
-"Medienname leer, steht der Schacht nicht im Medienkatalog der Maschine."
+"aus Medienname, Format, Grammatur und Papierfarbe — bleibt der Medienname"
+" leer, steht der Schacht nicht im Medienkatalog der Maschine."
 
 #: pressledger/web/templates/paper.html:56
 msgid ""
@@ -640,6 +721,18 @@ msgstr ""
 "Voreingestellt sind alle Jobtypen, weil Kalibrierbogen und Direktdrucke "
 "genauso vom Lager abgehen wie Kundenaufträge. Klicks fehlen hier: sie "
 "sind die Abrechnungszahl und lassen sich nicht aus Bogen ableiten."
+
+#: pressledger/web/templates/statistics.html:13
+msgid ""
+"Every click per calendar month, as the machine counts them: customer "
+"jobs, proofs and the machine's own use. Each run counts in the month it "
+"started; a job with runs in two months counts in both. The month opens "
+"its job list."
+msgstr ""
+"Alle Klicks pro Kalendermonat, so wie die Maschine sie zählt: "
+"Kundenaufträge, Andrucke und Eigenbedarf der Maschine. Jeder Lauf zählt "
+"im Monat seines Starts; ein Auftrag mit Läufen in zwei Monaten zählt in "
+"beiden. Der Monat öffnet seine Jobliste."
 
 #: pressledger/web/templates/status.html:6
 msgid "Data collection"
@@ -777,4 +870,19 @@ msgstr "Direktdruck vom Arbeitsplatz"
 #: pressledger/web/templates/unassigned.html:41
 msgid "Workflow, not assigned"
 msgstr "Workflow, nicht zugeordnet"
+
+#~ msgid "Months"
+#~ msgstr "Monate"
+
+# Empty states
+#~ msgid "No customer jobs in the selected period."
+#~ msgstr "Keine Kundenaufträge im gewählten Zeitraum."
+
+# Job detail page
+#~ msgid "Customer clicks"
+#~ msgstr "Kundenklicks"
+
+# Figure labels
+#~ msgid "Clicks total"
+#~ msgstr "Klicks gesamt"
 

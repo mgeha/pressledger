@@ -1,3 +1,4 @@
+import calendar
 import logging
 import math
 from contextlib import asynccontextmanager
@@ -265,8 +266,22 @@ def _list_ctx(
         "machine": machine,
     }
     max_clicks = max((j["clicks"] or 0) for j in jobs) if jobs else 0
+    keyless = reports.keyless_clicks(
+        conn,
+        date_from=date_from or None,
+        date_to=date_to or None,
+        q=q or None,
+        jobtype=jobtype or None,
+        machine=machine or None,
+    )
+    span = {k: v for k, v in params.items() if k in ("q", "date_from", "date_to", "machine") and v}
+    # /unassigned calls its job type `filter`; /own-use has none, it is SYSTEM only.
+    unassigned_span = {**span, "filter": jobtype} if jobtype else span
     return {
         "jobs": jobs,
+        "keyless": keyless,
+        "unassigned_url": "/unassigned?" + urlencode(unassigned_span),
+        "own_url": "/own-use?" + urlencode(span),
         "totals": {
             "clicks": sum(j["clicks"] or 0 for j in jobs),
             "sets": sum(j["sets"] or 0 for j in jobs),
@@ -385,11 +400,12 @@ def jobs_table(
     desc: int = 1,
     machine: str = "",
 ):
-    """htmx partial: only the table is swapped, not the full page."""
+    """htmx partial: the table, plus the key figures out-of-band."""
     ctx = {
         "request": request,
         "lang": request.state.lang,
         "multi_machine": config.get().multi_machine,
+        "oob": True,
     }
     ctx.update(
         _list_ctx(
@@ -582,6 +598,82 @@ def own_use_table(
     }
     ctx.update(_own_use_ctx(conn, q, date_from, date_to, _machine_param(machine)))
     return templates.TemplateResponse(request=request, name="_own_use_table.html", context=ctx)
+
+
+def _month_range(month: str, date_from: str, date_to: str) -> tuple[str, str]:
+    """First and last day of `month` ('YYYY-MM'), narrowed to the page's filter."""
+    year, mon = int(month[:4]), int(month[5:7])
+    first = f"{month}-01"
+    last = f"{month}-{calendar.monthrange(year, mon)[1]:02d}"
+    return max(first, date_from or first), min(last, date_to or last)
+
+
+def _statistics_ctx(conn, date_from, date_to, machine="") -> dict:
+    months = reports.monthly_stats(
+        conn,
+        date_from=date_from or None,
+        date_to=date_to or None,
+        machine=machine or None,
+    )
+    for row in months:
+        first, last = _month_range(row["month"], date_from, date_to)
+        span = {"date_from": first, "date_to": last}
+        if machine:
+            span["machine"] = machine
+        row["jobs_url"] = "/jobs?" + urlencode({**span, "jobtype": ""})
+        row["unassigned_url"] = "/unassigned?" + urlencode(span)
+        row["own_url"] = "/own-use?" + urlencode(span)
+
+    def total(key):
+        return sum(m[key] or 0 for m in months)
+
+    return {
+        "months": months,
+        "totals": {
+            key: total(key)
+            for key in ("clicks", "unassigned_clicks", "own_clicks", "sheets", "runtime_s")
+        },
+        # XL is a third click class that only shows up with banner printing.
+        "show_xl": any(m["xlbw"] or m["xlc"] for m in months),
+        "grouping": jobkey.grouping_enabled(),
+        "date_from": date_from,
+        "date_to": date_to,
+        "machine": machine,
+        "limits": reports.date_limits(conn),
+    }
+
+
+@app.get("/statistics", response_class=HTMLResponse)
+def statistics(
+    request: Request,
+    conn=Depends(db),
+    date_from: str = "",
+    date_to: str = "",
+    machine: str = "",
+):
+    """Every click per month, own use and unassigned runs included."""
+    machine = _machine_param(machine)
+    ctx = base_ctx(request, conn, "statistics", machine)
+    ctx.update(_statistics_ctx(conn, date_from, date_to, machine))
+    return templates.TemplateResponse(request=request, name="statistics.html", context=ctx)
+
+
+@app.get("/statistics/table", response_class=HTMLResponse)
+def statistics_table(
+    request: Request,
+    conn=Depends(db),
+    date_from: str = "",
+    date_to: str = "",
+    machine: str = "",
+):
+    """htmx partial, key figures included — they follow the filter."""
+    ctx = {
+        "request": request,
+        "lang": request.state.lang,
+        "multi_machine": config.get().multi_machine,
+    }
+    ctx.update(_statistics_ctx(conn, date_from, date_to, _machine_param(machine)))
+    return templates.TemplateResponse(request=request, name="_statistics_table.html", context=ctx)
 
 
 @app.get("/status", response_class=HTMLResponse)

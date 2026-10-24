@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PressLedger 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/mgeha/pressledger/issues\n"
-"POT-Creation-Date: 2026-09-18 09:41+0200\n"
+"POT-Creation-Date: 2026-10-15 14:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 #: pressledger/reports.py:44 pressledger/web/templates/job_detail.html:117
+#: pressledger/web/templates/statistics.html:6
 msgid "Production"
 msgstr ""
 
@@ -80,7 +81,7 @@ msgstr[1] ""
 #: pressledger/web/templates/_own_use_table.html:28
 #: pressledger/web/templates/_table.html:8
 #: pressledger/web/templates/_unassigned_table.html:23
-#: pressledger/web/templates/base.html:20
+#: pressledger/web/templates/base.html:21
 #: pressledger/web/templates/job_detail.html:74
 #: pressledger/web/templates/own_use.html:6
 #: pressledger/web/templates/status.html:2
@@ -89,7 +90,7 @@ msgid "Machine"
 msgstr ""
 
 #: pressledger/web/templates/_machine_filter.html:7
-#: pressledger/web/templates/jobs.html:78
+#: pressledger/web/templates/jobs.html:87
 #: pressledger/web/templates/paper.html:38
 #: pressledger/web/templates/unassigned.html:39
 msgid "all"
@@ -98,6 +99,7 @@ msgstr ""
 #: pressledger/web/templates/_own_use_table.html:5
 #: pressledger/web/templates/_own_use_table.html:29
 #: pressledger/web/templates/_own_use_table.html:65
+#: pressledger/web/templates/_statistics_table.html:46
 #: pressledger/web/templates/_unassigned_table.html:26
 #: pressledger/web/templates/job_detail.html:74
 msgid "Runs"
@@ -106,6 +108,8 @@ msgstr ""
 #: pressledger/web/templates/_own_use_table.html:9
 #: pressledger/web/templates/_own_use_table.html:30
 #: pressledger/web/templates/_own_use_table.html:66
+#: pressledger/web/templates/_statistics_table.html:5
+#: pressledger/web/templates/_statistics_table.html:41
 #: pressledger/web/templates/_table.html:11
 #: pressledger/web/templates/_unassigned_table.html:9
 #: pressledger/web/templates/_unassigned_table.html:28
@@ -123,6 +127,8 @@ msgstr ""
 #: pressledger/web/templates/_own_use_table.html:67
 #: pressledger/web/templates/_paper_table.html:9
 #: pressledger/web/templates/_paper_table.html:34
+#: pressledger/web/templates/_statistics_table.html:19
+#: pressledger/web/templates/_statistics_table.html:44
 #: pressledger/web/templates/_table.html:12
 #: pressledger/web/templates/_unassigned_table.html:13
 #: pressledger/web/templates/_unassigned_table.html:29
@@ -171,6 +177,7 @@ msgid ""
 msgstr ""
 
 #: pressledger/web/templates/_own_use_table.html:64
+#: pressledger/web/templates/_statistics_table.html:32
 msgid "Month"
 msgstr ""
 
@@ -197,7 +204,7 @@ msgid "Tray pulls"
 msgstr ""
 
 #: pressledger/web/templates/_paper_table.html:30
-#: pressledger/web/templates/base.html:18
+#: pressledger/web/templates/base.html:19
 #: pressledger/web/templates/job_detail.html:140
 #: pressledger/web/templates/paper.html:2
 #: pressledger/web/templates/paper.html:8
@@ -216,6 +223,7 @@ msgid "Color"
 msgstr ""
 
 #: pressledger/web/templates/_paper_table.html:37
+#: pressledger/web/templates/_statistics_table.html:45
 #: pressledger/web/templates/base.html:16
 #: pressledger/web/templates/job_detail.html:5
 #: pressledger/web/templates/jobs.html:2 pressledger/web/templates/jobs.html:8
@@ -245,6 +253,55 @@ msgstr ""
 msgid "Reset the filter or choose a different job type."
 msgstr ""
 
+#: pressledger/web/templates/_statistics_table.html:10
+#: pressledger/web/templates/_statistics_table.html:42
+msgid "of which unassigned"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:15
+#: pressledger/web/templates/_statistics_table.html:43
+msgid "of which own use"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:23
+#: pressledger/web/templates/_statistics_table.html:47
+#: pressledger/web/templates/_table.html:14
+#: pressledger/web/templates/_unassigned_table.html:30
+#: pressledger/web/templates/job_detail.html:74
+#: pressledger/web/templates/job_detail.html:109
+#: pressledger/web/templates/job_detail.html:142
+#: pressledger/web/templates/jobs.html:34
+msgid "Runtime"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:33
+msgid "A4 b/w"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:34
+msgid "A4 colour"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:35
+msgid "A3 b/w"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:36
+msgid "A3 colour"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:38
+msgid "XL b/w"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:39
+msgid "XL colour"
+msgstr ""
+
+#: pressledger/web/templates/_statistics_table.html:79
+msgid "No runs in the selected period."
+msgstr ""
+
 #: pressledger/web/templates/_table.html:6
 #: pressledger/web/templates/job_detail.html:8
 msgid "Job"
@@ -266,15 +323,6 @@ msgstr ""
 #: pressledger/web/templates/job_detail.html:137
 #: pressledger/web/templates/jobs.html:26
 msgid "Copies"
-msgstr ""
-
-#: pressledger/web/templates/_table.html:14
-#: pressledger/web/templates/_unassigned_table.html:30
-#: pressledger/web/templates/job_detail.html:74
-#: pressledger/web/templates/job_detail.html:109
-#: pressledger/web/templates/job_detail.html:142
-#: pressledger/web/templates/jobs.html:34
-msgid "Runtime"
 msgstr ""
 
 #: pressledger/web/templates/_table.html:15
@@ -324,45 +372,51 @@ msgstr ""
 msgid "Unassigned"
 msgstr ""
 
-#: pressledger/web/templates/base.html:19
+#: pressledger/web/templates/base.html:18
+#: pressledger/web/templates/statistics.html:2
+#: pressledger/web/templates/statistics.html:8
+msgid "Statistics"
+msgstr ""
+
+#: pressledger/web/templates/base.html:20
 #: pressledger/web/templates/own_use.html:2
 #: pressledger/web/templates/own_use.html:8
 msgid "Own use"
 msgstr ""
 
-#: pressledger/web/templates/base.html:29
+#: pressledger/web/templates/base.html:30
 msgid "Printer reachable"
 msgstr ""
 
-#: pressledger/web/templates/base.html:29
+#: pressledger/web/templates/base.html:30
 msgid "Sync"
 msgstr ""
 
-#: pressledger/web/templates/base.html:34
+#: pressledger/web/templates/base.html:35
 msgid "Machine offline"
 msgstr ""
 
-#: pressledger/web/templates/base.html:34
+#: pressledger/web/templates/base.html:35
 msgid "last sync"
 msgstr ""
 
-#: pressledger/web/templates/base.html:39
+#: pressledger/web/templates/base.html:40
 msgid "Machine not yet reached"
 msgstr ""
 
-#: pressledger/web/templates/base.html:39
+#: pressledger/web/templates/base.html:40
 msgid "attempt"
 msgstr ""
 
-#: pressledger/web/templates/base.html:44
+#: pressledger/web/templates/base.html:45
 msgid "No sync yet"
 msgstr ""
 
-#: pressledger/web/templates/base.html:51
+#: pressledger/web/templates/base.html:52
 msgid "Switch to English"
 msgstr ""
 
-#: pressledger/web/templates/base.html:53
+#: pressledger/web/templates/base.html:54
 msgid "Switch to German"
 msgstr ""
 
@@ -507,54 +561,77 @@ msgstr ""
 msgid "Sync now"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:61
+#: pressledger/web/templates/jobs.html:55
+msgid "Not in the list, because the runs carry no job number:"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:56
+msgid "clicks unassigned"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:58
+msgid "clicks own use"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:59
+msgid "together"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:59
+msgid "clicks"
+msgstr ""
+
+#: pressledger/web/templates/jobs.html:70
 #: pressledger/web/templates/own_use.html:23
 #: pressledger/web/templates/paper.html:23
 #: pressledger/web/templates/unassigned.html:23
 msgid "Search"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:63
+#: pressledger/web/templates/jobs.html:72
 msgid "Job or file name"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:66
+#: pressledger/web/templates/jobs.html:75
 #: pressledger/web/templates/own_use.html:27
 #: pressledger/web/templates/paper.html:28
+#: pressledger/web/templates/statistics.html:23
 #: pressledger/web/templates/unassigned.html:27
 msgid "From"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:70
+#: pressledger/web/templates/jobs.html:79
 #: pressledger/web/templates/own_use.html:32
 #: pressledger/web/templates/paper.html:32
+#: pressledger/web/templates/statistics.html:28
 #: pressledger/web/templates/unassigned.html:32
 msgid "To"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:74
+#: pressledger/web/templates/jobs.html:83
 #: pressledger/web/templates/paper.html:36
 msgid "Job type"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:76
+#: pressledger/web/templates/jobs.html:85
 #: pressledger/web/templates/paper.html:39
 msgid "Print jobs"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:77
+#: pressledger/web/templates/jobs.html:86
 #: pressledger/web/templates/paper.html:41
 msgid "Direct print"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:84
+#: pressledger/web/templates/jobs.html:93
 #: pressledger/web/templates/own_use.html:37
 #: pressledger/web/templates/paper.html:47
+#: pressledger/web/templates/statistics.html:33
 #: pressledger/web/templates/unassigned.html:45
 msgid "Reset"
 msgstr ""
 
-#: pressledger/web/templates/jobs.html:90
+#: pressledger/web/templates/jobs.html:99
 msgid ""
 "A job is summed across all print days — follow-up deliveries do not "
 "appear as a separate job. Clicks are printed pages and the billing "
@@ -590,6 +667,14 @@ msgid ""
 "All job types are selected by default: calibration sheets and direct "
 "prints consume stock like customer jobs. Clicks are absent here — they "
 "are the billing figure and cannot be derived from sheets."
+msgstr ""
+
+#: pressledger/web/templates/statistics.html:13
+msgid ""
+"Every click per calendar month, as the machine counts them: customer "
+"jobs, proofs and the machine's own use. Each run counts in the month it "
+"started; a job with runs in two months counts in both. The month opens "
+"its job list."
 msgstr ""
 
 #: pressledger/web/templates/status.html:6

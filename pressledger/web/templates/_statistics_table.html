@@ -1,0 +1,83 @@
+<div id="statistics">
+<div class="figures">
+  <div class="figure">
+    <span class="figure__value">{{ totals.clicks | number }}</span>
+    <span class="figure__label">{{ _("Clicks") }}</span>
+  </div>
+  {% if grouping %}
+  <div class="figure">
+    <span class="figure__value">{{ totals.unassigned_clicks | number }}</span>
+    <span class="figure__label">{{ _("of which unassigned") }}</span>
+  </div>
+  {% endif %}
+  <div class="figure">
+    <span class="figure__value">{{ totals.own_clicks | number }}</span>
+    <span class="figure__label">{{ _("of which own use") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.sheets | number }}</span>
+    <span class="figure__label">{{ _("Sheets") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.runtime_s | duration }}</span>
+    <span class="figure__label">{{ _("Runtime") }}</span>
+  </div>
+</div>
+
+{% if months %}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>{{ _("Month") }}</th>
+        <th class="r">{{ _("A4 b/w") }}</th>
+        <th class="r">{{ _("A4 colour") }}</th>
+        <th class="r">{{ _("A3 b/w") }}</th>
+        <th class="r">{{ _("A3 colour") }}</th>
+        {% if show_xl %}
+        <th class="r">{{ _("XL b/w") }}</th>
+        <th class="r">{{ _("XL colour") }}</th>
+        {% endif %}
+        <th class="r">{{ _("Clicks") }}</th>
+        {% if grouping %}<th class="r">{{ _("of which unassigned") }}</th>{% endif %}
+        <th class="r">{{ _("of which own use") }}</th>
+        <th class="r">{{ _("Sheets") }}</th>
+        <th class="r">{{ _("Jobs") }}</th>
+        <th class="r">{{ _("Runs") }}</th>
+        <th class="r">{{ _("Runtime") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in months %}
+      <tr>
+        <td class="n"><a href="{{ m.jobs_url }}">{{ m.month }}</a></td>
+        <td class="r n">{{ m.a4bw | number }}</td>
+        <td class="r n">{{ m.a4c | number }}</td>
+        <td class="r n">{{ m.a3bw | number }}</td>
+        <td class="r n">{{ m.a3c | number }}</td>
+        {% if show_xl %}
+        <td class="r n">{{ m.xlbw | number }}</td>
+        <td class="r n">{{ m.xlc | number }}</td>
+        {% endif %}
+        <td class="r n">{{ m.clicks | number }}</td>
+        {% if grouping %}
+        <td class="r n">{% if m.unassigned_clicks %}<a href="{{ m.unassigned_url }}">{{ m.unassigned_clicks | number }}</a>{% else %}0{% endif %}</td>
+        {% endif %}
+        <td class="r n">{% if m.own_clicks %}<a href="{{ m.own_url }}">{{ m.own_clicks | number }}</a>{% else %}0{% endif %}</td>
+        <td class="r n">{{ m.sheets | number }}</td>
+        <td class="r n">{{ m.jobs | number }}</td>
+        <td class="r n">{{ m.runs | number }}</td>
+        <td class="r n">{{ m.runtime_s | duration }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="table-wrap">
+  <div class="empty">
+    <p>{{ _("No runs in the selected period.") }}</p>
+  </div>
+</div>
+{% endif %}
+</div>

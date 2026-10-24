@@ -12,7 +12,7 @@ import sqlite3
 import unittest
 
 from pressledger.db import SCHEMA_SQL, register_functions
-from pressledger.reports import job_detail, job_list, paper_usage
+from pressledger.reports import job_detail, job_list, monthly_stats, paper_usage
 from tests.support import MACHINE, SECOND_MACHINE, configured
 
 # All six click columns are filled: one NULL makes the whole sum NULL.
@@ -127,6 +127,26 @@ class TwoMachineReportTests(unittest.TestCase):
     def test_the_material_summary_does_not_fan_out(self):
         job = job_detail(self.conn, "105774")
         self.assertEqual(sum(m["sheets"] for m in job["material"]), 20)
+
+    def test_months_count_a_shared_job_once_and_every_click(self):
+        [month] = monthly_stats(self.conn)
+        self.assertEqual(month["month"], "2026-08")
+        self.assertEqual((month["jobs"], month["runs"], month["runtime_s"]), (2, 3, 30 * 60))
+        self.assertEqual(month["clicks"], self._truth("SELECT SUM(nofprinteda4bw) FROM jobs"))
+        self.assertEqual(month["a4bw"], month["clicks"])
+
+        [filtered] = monthly_stats(self.conn, machine=MACHINE.id)
+        self.assertEqual((filtered["jobs"], filtered["clicks"]), (1, 10))
+
+    def test_a_job_spanning_two_months_counts_in_both(self):
+        self.conn.execute(
+            JOB_SQL.replace("'2026-08-11'", "'2026-09-01'"),
+            (MACHINE.id, 3, "105774_Customer.pdf", 7),
+        )
+        months = {m["month"]: m for m in monthly_stats(self.conn)}
+        self.assertEqual(list(months), ["2026-09", "2026-08"])
+        self.assertEqual((months["2026-09"]["jobs"], months["2026-09"]["clicks"]), (1, 7))
+        self.assertEqual(months["2026-08"]["jobs"], 2)
 
 
 if __name__ == "__main__":

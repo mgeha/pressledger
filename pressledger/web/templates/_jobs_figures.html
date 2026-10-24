@@ -1,0 +1,50 @@
+{# Swapped out-of-band with the table, so the figures follow the filter. #}
+<div id="jobs-figures"{% if oob %} hx-swap-oob="true"{% endif %}>
+<div class="figures">
+  <div class="figure">
+    <span class="figure__value">{{ jobs | length | number }}</span>
+    <span class="figure__label">{{ _("Jobs") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.clicks | number }}</span>
+    <span class="figure__label">{{ _("Clicks") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.sets | number }}</span>
+    <span class="figure__label">{{ _("Copies") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.sheets | number }}</span>
+    <span class="figure__label">{{ _("Sheets") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.runtime_s | duration }}</span>
+    <span class="figure__label">{{ _("Runtime") }}</span>
+  </div>
+  <div class="figure">
+    <span class="figure__value">{{ totals.proofs | number }}</span>
+    <span class="figure__label">{{ _("Proofs") }}</span>
+  </div>
+  {% if totals.folds %}
+  <div class="figure">
+    <span class="figure__value">{{ totals.folds | number }}</span>
+    <span class="figure__label">{{ ngettext("Fold", "Folds", totals.folds) }}</span>
+  </div>
+  {% endif %}
+  {% if totals.booklets %}
+  <div class="figure">
+    <span class="figure__value">{{ totals.booklets | number }}</span>
+    <span class="figure__label">{{ ngettext("Booklet", "Booklets", totals.booklets) }}</span>
+  </div>
+  {% endif %}
+</div>
+{% if keyless.unassigned or keyless.own_use %}
+<p class="figures-note">
+  {{ _("Not in the list, because the runs carry no job number:") }}
+  {% if keyless.unassigned %}<a href="{{ unassigned_url }}">{{ keyless.unassigned | number }} {{ _("clicks unassigned") }}</a>{% endif %}
+  {% if keyless.unassigned and keyless.own_use %} · {% endif %}
+  {% if keyless.own_use %}<a href="{{ own_url }}">{{ keyless.own_use | number }} {{ _("clicks own use") }}</a>{% endif %}
+  — {{ _("together") }} {{ (totals.clicks + keyless.unassigned + keyless.own_use) | number }} {{ _("clicks") }}.
+</p>
+{% endif %}
+</div>
