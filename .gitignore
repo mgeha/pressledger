@@ -6,6 +6,7 @@ __pycache__/
 .venv/
 .env
 pressledger.toml
+pressledger-demo.toml
 .mcp.json
 .claude/
 CLAUDE.md
@@ -23,3 +24,4 @@ local/
 *.sqlite
 *.db
 *.log
+.playwright-mcp/
