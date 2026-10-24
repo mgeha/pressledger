@@ -473,6 +473,38 @@ tfoot td.r { text-align: right; }
   .detail-head h1 { font-size: 34px; }
 }
 
+@media print {
+  @page { size: A4 portrait; margin: 10mm; }
+  /* The page as printed: content only, no navigation and no controls. */
+  .topbar, form, .btn { display: none !important; }
+  .shell { max-width: none; padding: 0; }
+  /* Smaller throughout, so the 12 to 15 column tables fit the portrait width. */
+  h1 { font-size: 24px; }
+  .label__rubric { min-height: 0; padding: 4px 12px; font-size: 9px; }
+  .label__body { padding: 10px 14px; }
+  .hint { font-size: 10px; margin-top: 8px; }
+  .figures { margin-top: 12px; }
+  .figure { padding: 6px 14px 6px 0; margin-right: 14px; min-width: 0; }
+  .figure__value { font-size: 16px; }
+  .figure__label { font-size: 7px; }
+  .table-wrap { overflow: visible; margin-top: 12px; }
+  table { font-size: 8px; }
+  thead th { font-size: 6px; white-space: normal; letter-spacing: 0.04em; padding: 0 5px 5px 0; }
+  tbody td { padding: 4px 5px 4px 0; overflow-wrap: anywhere; }
+  td.n { white-space: nowrap; }
+  .title { max-width: 150px; }
+  .jobnum, .medialist, .finishing, .span__row.muted, .kv { font-size: 8px; }
+  .finishing__label, .medialist__tray, .tag { font-size: 6.5px; }
+  .tag { padding: 1px 4px; }
+  .detail-head h1 { font-size: 28px; }
+  .label__sub, .counter__caption, .section__note, .legend { font-size: 10px; }
+  .counter { margin-top: 16px; }
+  .counter__digit { font-size: 26px; min-width: 26px; padding: 6px 7px 8px; }
+  .section { margin-top: 20px; }
+  a { text-decoration: none; }
+  tr { break-inside: avoid; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
